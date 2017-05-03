@@ -1,0 +1,1915 @@
+  [1m[36m (117.0ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) [0m
+  [1m[35m (0.0ms)[0m  select sqlite_version(*)
+  [1m[36m (132.0ms)[0m  [1mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.0ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36mActiveRecord::SchemaMigration Load (1.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreateProducts (20140927185643)
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (1.0ms)[0m  [1mCREATE TABLE "products" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "price" decimal(12,3), "active" boolean, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.0ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20140927185643"]]
+  [1m[36m (122.0ms)[0m  [1mcommit transaction[0m
+Migrating to CreateOrderStatuses (20140927190032)
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (1.0ms)[0m  [1mCREATE TABLE "order_statuses" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.0ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20140927190032"]]
+  [1m[36m (111.0ms)[0m  [1mcommit transaction[0m
+Migrating to CreateOrders (20140927190042)
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (2.0ms)[0m  [1mCREATE TABLE "orders" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "subtotal" decimal(12,3), "tax" decimal(12,3), "shipping" decimal(12,3), "total" decimal(12,3), "order_status_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (0.0ms)[0m  select sqlite_version(*)
+  [1m[36m (0.0ms)[0m  [1mCREATE  INDEX "index_orders_on_order_status_id" ON "orders" ("order_status_id")[0m
+  [1m[35mSQL (0.0ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20140927190042"]]
+  [1m[36m (120.0ms)[0m  [1mcommit transaction[0m
+Migrating to CreateOrderItems (20140927192104)
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (1.0ms)[0m  [1mCREATE TABLE "order_items" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "product_id" integer, "order_id" integer, "unit_price" decimal(12,3), "quantity" integer, "total_price" decimal(12,3), "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (0.0ms)[0m  CREATE  INDEX "index_order_items_on_product_id" ON "order_items" ("product_id")
+  [1m[36m (1.0ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_order_items_on_product_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_order_items_on_product_id' AND type='index'
+[0m
+  [1m[35m (0.0ms)[0m  CREATE  INDEX "index_order_items_on_order_id" ON "order_items" ("order_id")
+  [1m[36mSQL (0.0ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20140927192104"]]
+  [1m[35m (142.0ms)[0m  commit transaction
+  [1m[36mActiveRecord::SchemaMigration Load (1.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.0ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_order_items_on_order_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_order_items_on_order_id' AND type='index'
+
+  [1m[36m (0.0ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_order_items_on_product_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_order_items_on_product_id' AND type='index'
+[0m
+  [1m[35m (1.0ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_orders_on_order_status_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_orders_on_order_status_id' AND type='index'
+
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35mSQL (0.0ms)[0m  DELETE FROM "products" WHERE "products"."active" = 't'
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (1.0ms)[0m  INSERT INTO "products" ("active", "created_at", "id", "name", "price", "updated_at") VALUES (?, ?, ?, ?, ?, ?)  [["active", "t"], ["created_at", "2017-05-02 23:24:19.398364"], ["id", 1], ["name", "Banana"], ["price", 0.49], ["updated_at", "2017-05-02 23:24:19.398364"]]
+  [1m[36m (132.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mSQL (1.0ms)[0m  [1mINSERT INTO "products" ("active", "created_at", "id", "name", "price", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["active", "t"], ["created_at", "2017-05-02 23:24:19.536372"], ["id", 2], ["name", "Apple"], ["price", 0.29], ["updated_at", "2017-05-02 23:24:19.536372"]]
+  [1m[35m (96.0ms)[0m  commit transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (2.0ms)[0m  INSERT INTO "products" ("active", "created_at", "id", "name", "price", "updated_at") VALUES (?, ?, ?, ?, ?, ?)  [["active", "t"], ["created_at", "2017-05-02 23:24:19.636378"], ["id", 3], ["name", "Carton of Strawberries"], ["price", 1.99], ["updated_at", "2017-05-02 23:24:19.636378"]]
+  [1m[36m (117.0ms)[0m  [1mcommit transaction[0m
+  [1m[35mSQL (105.0ms)[0m  DELETE FROM "order_statuses"
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (1.0ms)[0m  INSERT INTO "order_statuses" ("created_at", "id", "name", "updated_at") VALUES (?, ?, ?, ?)  [["created_at", "2017-05-02 23:24:19.874392"], ["id", 1], ["name", "In Progress"], ["updated_at", "2017-05-02 23:24:19.874392"]]
+  [1m[36m (122.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mSQL (1.0ms)[0m  [1mINSERT INTO "order_statuses" ("created_at", "id", "name", "updated_at") VALUES (?, ?, ?, ?)[0m  [["created_at", "2017-05-02 23:24:20.002399"], ["id", 2], ["name", "Placed"], ["updated_at", "2017-05-02 23:24:20.002399"]]
+  [1m[35m (118.0ms)[0m  commit transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (1.0ms)[0m  INSERT INTO "order_statuses" ("created_at", "id", "name", "updated_at") VALUES (?, ?, ?, ?)  [["created_at", "2017-05-02 23:24:20.124406"], ["id", 3], ["name", "Shipped"], ["updated_at", "2017-05-02 23:24:20.124406"]]
+  [1m[36m (106.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mSQL (1.0ms)[0m  [1mINSERT INTO "order_statuses" ("created_at", "id", "name", "updated_at") VALUES (?, ?, ?, ?)[0m  [["created_at", "2017-05-02 23:24:20.235412"], ["id", 4], ["name", "Cancelled"], ["updated_at", "2017-05-02 23:24:20.235412"]]
+  [1m[35m (96.0ms)[0m  commit transaction
+
+
+Started GET "/" for 127.0.0.1 at 2017-05-03 04:56:11 +0530
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by ProductsController#index as HTML
+  [1m[35mProduct Load (0.0ms)[0m  SELECT "products".* FROM "products"  WHERE "products"."active" = 't'
+  Rendered products/_product_row.html.erb (54.0ms)
+  Rendered products/_product_row.html.erb (2.0ms)
+  Rendered products/_product_row.html.erb (9.0ms)
+  Rendered products/index.html.erb within layouts/application (159.0ms)
+Completed 500 Internal Server Error in 2303ms
+
+ActionView::Template::Error (TypeError: Object doesn't support this property or method
+  (in C:/Users/Aditi/Downloads/ShoppingCartExampleApp-master/app/assets/javascripts/carts.js.coffee)):
+    2: <html>
+    3: <head>
+    4:   <title>ShoppingCartExample</title>
+    5:   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    6:   <% if request.ssl? %>
+    7:     <%= stylesheet_link_tag 'https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css' %>
+    8:     <%= javascript_include_tag 'https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js' %>
+  app/views/layouts/application.html.erb:5:in `_app_views_layouts_application_html_erb___429246191_36300288'
+
+
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (3.0ms)
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.0ms)
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/template_error.html.erb within rescues/layout (722.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-05-03 04:58:36 +0530
+Processing by ProductsController#index as HTML
+  [1m[36mProduct Load (0.0ms)[0m  [1mSELECT "products".* FROM "products"  WHERE "products"."active" = 't'[0m
+  Rendered products/_product_row.html.erb (3.0ms)
+  Rendered products/_product_row.html.erb (3.0ms)
+  Rendered products/_product_row.html.erb (2.0ms)
+  Rendered products/index.html.erb within layouts/application (93.0ms)
+  Rendered layouts/_cart_text.html.erb (3.0ms)
+Completed 200 OK in 419ms (Views: 415.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2017-05-03 04:58:43 +0530
+
+
+Started GET "/assets/order_items.css?body=1" for 127.0.0.1 at 2017-05-03 04:58:43 +0530
+
+
+Started GET "/assets/products.css?body=1" for 127.0.0.1 at 2017-05-03 04:58:43 +0530
+
+
+Started GET "/assets/carts.css?body=1" for 127.0.0.1 at 2017-05-03 04:58:43 +0530
+
+
+Started POST "/order_items" for 127.0.0.1 at 2017-05-03 04:59:40 +0530
+Processing by OrderItemsController#create as HTML
+  Parameters: {"utf8"=>"✓", "order_item"=>{"quantity"=>"1", "product_id"=>"1"}, "commit"=>"Add to Cart"}
+Can't verify CSRF token authenticity
+Completed 422 Unprocessable Entity in 3ms
+
+ActionController::InvalidAuthenticityToken (ActionController::InvalidAuthenticityToken):
+  actionpack (4.1.6) lib/action_controller/metal/request_forgery_protection.rb:176:in `handle_unverified_request'
+  actionpack (4.1.6) lib/action_controller/metal/request_forgery_protection.rb:202:in `handle_unverified_request'
+  actionpack (4.1.6) lib/action_controller/metal/request_forgery_protection.rb:197:in `verify_authenticity_token'
+  activesupport (4.1.6) lib/active_support/callbacks.rb:424:in `block in make_lambda'
+  activesupport (4.1.6) lib/active_support/callbacks.rb:160:in `block in halting'
+  activesupport (4.1.6) lib/active_support/callbacks.rb:86:in `run_callbacks'
+  actionpack (4.1.6) lib/abstract_controller/callbacks.rb:19:in `process_action'
+  actionpack (4.1.6) lib/action_controller/metal/rescue.rb:29:in `process_action'
+  actionpack (4.1.6) lib/action_controller/metal/instrumentation.rb:31:in `block in process_action'
+  activesupport (4.1.6) lib/active_support/notifications.rb:159:in `block in instrument'
+  activesupport (4.1.6) lib/active_support/notifications/instrumenter.rb:20:in `instrument'
+  activesupport (4.1.6) lib/active_support/notifications.rb:159:in `instrument'
+  actionpack (4.1.6) lib/action_controller/metal/instrumentation.rb:30:in `process_action'
+  actionpack (4.1.6) lib/action_controller/metal/params_wrapper.rb:250:in `process_action'
+  activerecord (4.1.6) lib/active_record/railties/controller_runtime.rb:18:in `process_action'
+  actionpack (4.1.6) lib/abstract_controller/base.rb:136:in `process'
+  actionview (4.1.6) lib/action_view/rendering.rb:30:in `process'
+  actionpack (4.1.6) lib/action_controller/metal.rb:196:in `dispatch'
+  actionpack (4.1.6) lib/action_controller/metal/rack_delegation.rb:13:in `dispatch'
+  actionpack (4.1.6) lib/action_controller/metal.rb:232:in `block in action'
+  actionpack (4.1.6) lib/action_dispatch/routing/route_set.rb:82:in `dispatch'
+  actionpack (4.1.6) lib/action_dispatch/routing/route_set.rb:50:in `call'
+  actionpack (4.1.6) lib/action_dispatch/journey/router.rb:73:in `block in call'
+  actionpack (4.1.6) lib/action_dispatch/journey/router.rb:59:in `each'
+  actionpack (4.1.6) lib/action_dispatch/journey/router.rb:59:in `call'
+  actionpack (4.1.6) lib/action_dispatch/routing/route_set.rb:678:in `call'
+  rack (1.5.5) lib/rack/etag.rb:23:in `call'
+  rack (1.5.5) lib/rack/conditionalget.rb:35:in `call'
+  rack (1.5.5) lib/rack/head.rb:11:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/params_parser.rb:27:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/flash.rb:254:in `call'
+  rack (1.5.5) lib/rack/session/abstract/id.rb:225:in `context'
+  rack (1.5.5) lib/rack/session/abstract/id.rb:220:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/cookies.rb:560:in `call'
+  activerecord (4.1.6) lib/active_record/query_cache.rb:36:in `call'
+  activerecord (4.1.6) lib/active_record/connection_adapters/abstract/connection_pool.rb:621:in `call'
+  activerecord (4.1.6) lib/active_record/migration.rb:380:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/callbacks.rb:29:in `block in call'
+  activesupport (4.1.6) lib/active_support/callbacks.rb:82:in `run_callbacks'
+  actionpack (4.1.6) lib/action_dispatch/middleware/callbacks.rb:27:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/reloader.rb:73:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/remote_ip.rb:76:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/debug_exceptions.rb:17:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.1.6) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.1.6) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.1.6) lib/rails/rack/logger.rb:20:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.5.5) lib/rack/methodoverride.rb:21:in `call'
+  rack (1.5.5) lib/rack/runtime.rb:17:in `call'
+  activesupport (4.1.6) lib/active_support/cache/strategy/local_cache_middleware.rb:26:in `call'
+  rack (1.5.5) lib/rack/lock.rb:17:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/static.rb:64:in `call'
+  rack (1.5.5) lib/rack/sendfile.rb:112:in `call'
+  railties (4.1.6) lib/rails/engine.rb:514:in `call'
+  railties (4.1.6) lib/rails/application.rb:144:in `call'
+  rack (1.5.5) lib/rack/lock.rb:17:in `call'
+  rack (1.5.5) lib/rack/content_length.rb:14:in `call'
+  rack (1.5.5) lib/rack/handler/webrick.rb:60:in `service'
+  C:/RailsInstaller/Ruby2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:140:in `service'
+  C:/RailsInstaller/Ruby2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:96:in `run'
+  C:/RailsInstaller/Ruby2.3.0/lib/ruby/2.3.0/webrick/server.rb:296:in `block in start_thread'
+
+
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/_source.erb (1.0ms)
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.0ms)
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (2.0ms)
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (1138.1ms)
+
+
+Started POST "/order_items" for 127.0.0.1 at 2017-05-03 04:59:54 +0530
+Processing by OrderItemsController#create as HTML
+  Parameters: {"utf8"=>"✓", "order_item"=>{"quantity"=>"1", "product_id"=>"1"}, "commit"=>"Add to Cart"}
+Can't verify CSRF token authenticity
+Completed 422 Unprocessable Entity in 1ms
+
+ActionController::InvalidAuthenticityToken (ActionController::InvalidAuthenticityToken):
+  actionpack (4.1.6) lib/action_controller/metal/request_forgery_protection.rb:176:in `handle_unverified_request'
+  actionpack (4.1.6) lib/action_controller/metal/request_forgery_protection.rb:202:in `handle_unverified_request'
+  actionpack (4.1.6) lib/action_controller/metal/request_forgery_protection.rb:197:in `verify_authenticity_token'
+  activesupport (4.1.6) lib/active_support/callbacks.rb:424:in `block in make_lambda'
+  activesupport (4.1.6) lib/active_support/callbacks.rb:160:in `block in halting'
+  activesupport (4.1.6) lib/active_support/callbacks.rb:86:in `run_callbacks'
+  actionpack (4.1.6) lib/abstract_controller/callbacks.rb:19:in `process_action'
+  actionpack (4.1.6) lib/action_controller/metal/rescue.rb:29:in `process_action'
+  actionpack (4.1.6) lib/action_controller/metal/instrumentation.rb:31:in `block in process_action'
+  activesupport (4.1.6) lib/active_support/notifications.rb:159:in `block in instrument'
+  activesupport (4.1.6) lib/active_support/notifications/instrumenter.rb:20:in `instrument'
+  activesupport (4.1.6) lib/active_support/notifications.rb:159:in `instrument'
+  actionpack (4.1.6) lib/action_controller/metal/instrumentation.rb:30:in `process_action'
+  actionpack (4.1.6) lib/action_controller/metal/params_wrapper.rb:250:in `process_action'
+  activerecord (4.1.6) lib/active_record/railties/controller_runtime.rb:18:in `process_action'
+  actionpack (4.1.6) lib/abstract_controller/base.rb:136:in `process'
+  actionview (4.1.6) lib/action_view/rendering.rb:30:in `process'
+  actionpack (4.1.6) lib/action_controller/metal.rb:196:in `dispatch'
+  actionpack (4.1.6) lib/action_controller/metal/rack_delegation.rb:13:in `dispatch'
+  actionpack (4.1.6) lib/action_controller/metal.rb:232:in `block in action'
+  actionpack (4.1.6) lib/action_dispatch/routing/route_set.rb:82:in `dispatch'
+  actionpack (4.1.6) lib/action_dispatch/routing/route_set.rb:50:in `call'
+  actionpack (4.1.6) lib/action_dispatch/journey/router.rb:73:in `block in call'
+  actionpack (4.1.6) lib/action_dispatch/journey/router.rb:59:in `each'
+  actionpack (4.1.6) lib/action_dispatch/journey/router.rb:59:in `call'
+  actionpack (4.1.6) lib/action_dispatch/routing/route_set.rb:678:in `call'
+  rack (1.5.5) lib/rack/etag.rb:23:in `call'
+  rack (1.5.5) lib/rack/conditionalget.rb:35:in `call'
+  rack (1.5.5) lib/rack/head.rb:11:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/params_parser.rb:27:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/flash.rb:254:in `call'
+  rack (1.5.5) lib/rack/session/abstract/id.rb:225:in `context'
+  rack (1.5.5) lib/rack/session/abstract/id.rb:220:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/cookies.rb:560:in `call'
+  activerecord (4.1.6) lib/active_record/query_cache.rb:36:in `call'
+  activerecord (4.1.6) lib/active_record/connection_adapters/abstract/connection_pool.rb:621:in `call'
+  activerecord (4.1.6) lib/active_record/migration.rb:380:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/callbacks.rb:29:in `block in call'
+  activesupport (4.1.6) lib/active_support/callbacks.rb:82:in `run_callbacks'
+  actionpack (4.1.6) lib/action_dispatch/middleware/callbacks.rb:27:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/reloader.rb:73:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/remote_ip.rb:76:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/debug_exceptions.rb:17:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.1.6) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.1.6) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.1.6) lib/rails/rack/logger.rb:20:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.5.5) lib/rack/methodoverride.rb:21:in `call'
+  rack (1.5.5) lib/rack/runtime.rb:17:in `call'
+  activesupport (4.1.6) lib/active_support/cache/strategy/local_cache_middleware.rb:26:in `call'
+  rack (1.5.5) lib/rack/lock.rb:17:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/static.rb:64:in `call'
+  rack (1.5.5) lib/rack/sendfile.rb:112:in `call'
+  railties (4.1.6) lib/rails/engine.rb:514:in `call'
+  railties (4.1.6) lib/rails/application.rb:144:in `call'
+  rack (1.5.5) lib/rack/lock.rb:17:in `call'
+  rack (1.5.5) lib/rack/content_length.rb:14:in `call'
+  rack (1.5.5) lib/rack/handler/webrick.rb:60:in `service'
+  C:/RailsInstaller/Ruby2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:140:in `service'
+  C:/RailsInstaller/Ruby2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:96:in `run'
+  C:/RailsInstaller/Ruby2.3.0/lib/ruby/2.3.0/webrick/server.rb:296:in `block in start_thread'
+
+
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/_source.erb (1.0ms)
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.0ms)
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (2.0ms)
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (1185.1ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-05-03 05:02:45 +0530
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by ProductsController#index as HTML
+  [1m[35mProduct Load (0.0ms)[0m  SELECT "products".* FROM "products"  WHERE "products"."active" = 't'
+  Rendered products/_product_row.html.erb (59.0ms)
+  Rendered products/_product_row.html.erb (2.0ms)
+  Rendered products/_product_row.html.erb (9.0ms)
+  Rendered products/index.html.erb within layouts/application (176.0ms)
+  Rendered layouts/_cart_text.html.erb (3.0ms)
+Completed 200 OK in 571ms (Views: 442.1ms | ActiveRecord: 2.0ms)
+
+
+Started GET "/assets/products.css?body=1" for 127.0.0.1 at 2017-05-03 05:02:54 +0530
+
+
+Started GET "/assets/order_items.css?body=1" for 127.0.0.1 at 2017-05-03 05:02:54 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2017-05-03 05:02:54 +0530
+
+
+Started GET "/assets/carts.css?body=1" for 127.0.0.1 at 2017-05-03 05:02:54 +0530
+
+
+Started POST "/order_items" for 127.0.0.1 at 2017-05-03 05:03:29 +0530
+Processing by OrderItemsController#create as HTML
+  Parameters: {"utf8"=>"✓", "order_item"=>{"quantity"=>"1", "product_id"=>"1"}, "commit"=>"Add to Cart"}
+Can't verify CSRF token authenticity
+Completed 422 Unprocessable Entity in 2ms
+
+ActionController::InvalidAuthenticityToken (ActionController::InvalidAuthenticityToken):
+  actionpack (4.1.6) lib/action_controller/metal/request_forgery_protection.rb:176:in `handle_unverified_request'
+  actionpack (4.1.6) lib/action_controller/metal/request_forgery_protection.rb:202:in `handle_unverified_request'
+  actionpack (4.1.6) lib/action_controller/metal/request_forgery_protection.rb:197:in `verify_authenticity_token'
+  activesupport (4.1.6) lib/active_support/callbacks.rb:424:in `block in make_lambda'
+  activesupport (4.1.6) lib/active_support/callbacks.rb:160:in `block in halting'
+  activesupport (4.1.6) lib/active_support/callbacks.rb:86:in `run_callbacks'
+  actionpack (4.1.6) lib/abstract_controller/callbacks.rb:19:in `process_action'
+  actionpack (4.1.6) lib/action_controller/metal/rescue.rb:29:in `process_action'
+  actionpack (4.1.6) lib/action_controller/metal/instrumentation.rb:31:in `block in process_action'
+  activesupport (4.1.6) lib/active_support/notifications.rb:159:in `block in instrument'
+  activesupport (4.1.6) lib/active_support/notifications/instrumenter.rb:20:in `instrument'
+  activesupport (4.1.6) lib/active_support/notifications.rb:159:in `instrument'
+  actionpack (4.1.6) lib/action_controller/metal/instrumentation.rb:30:in `process_action'
+  actionpack (4.1.6) lib/action_controller/metal/params_wrapper.rb:250:in `process_action'
+  activerecord (4.1.6) lib/active_record/railties/controller_runtime.rb:18:in `process_action'
+  actionpack (4.1.6) lib/abstract_controller/base.rb:136:in `process'
+  actionview (4.1.6) lib/action_view/rendering.rb:30:in `process'
+  actionpack (4.1.6) lib/action_controller/metal.rb:196:in `dispatch'
+  actionpack (4.1.6) lib/action_controller/metal/rack_delegation.rb:13:in `dispatch'
+  actionpack (4.1.6) lib/action_controller/metal.rb:232:in `block in action'
+  actionpack (4.1.6) lib/action_dispatch/routing/route_set.rb:82:in `dispatch'
+  actionpack (4.1.6) lib/action_dispatch/routing/route_set.rb:50:in `call'
+  actionpack (4.1.6) lib/action_dispatch/journey/router.rb:73:in `block in call'
+  actionpack (4.1.6) lib/action_dispatch/journey/router.rb:59:in `each'
+  actionpack (4.1.6) lib/action_dispatch/journey/router.rb:59:in `call'
+  actionpack (4.1.6) lib/action_dispatch/routing/route_set.rb:678:in `call'
+  rack (1.5.5) lib/rack/etag.rb:23:in `call'
+  rack (1.5.5) lib/rack/conditionalget.rb:35:in `call'
+  rack (1.5.5) lib/rack/head.rb:11:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/params_parser.rb:27:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/flash.rb:254:in `call'
+  rack (1.5.5) lib/rack/session/abstract/id.rb:225:in `context'
+  rack (1.5.5) lib/rack/session/abstract/id.rb:220:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/cookies.rb:560:in `call'
+  activerecord (4.1.6) lib/active_record/query_cache.rb:36:in `call'
+  activerecord (4.1.6) lib/active_record/connection_adapters/abstract/connection_pool.rb:621:in `call'
+  activerecord (4.1.6) lib/active_record/migration.rb:380:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/callbacks.rb:29:in `block in call'
+  activesupport (4.1.6) lib/active_support/callbacks.rb:82:in `run_callbacks'
+  actionpack (4.1.6) lib/action_dispatch/middleware/callbacks.rb:27:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/reloader.rb:73:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/remote_ip.rb:76:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/debug_exceptions.rb:17:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.1.6) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.1.6) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.1.6) lib/rails/rack/logger.rb:20:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.5.5) lib/rack/methodoverride.rb:21:in `call'
+  rack (1.5.5) lib/rack/runtime.rb:17:in `call'
+  activesupport (4.1.6) lib/active_support/cache/strategy/local_cache_middleware.rb:26:in `call'
+  rack (1.5.5) lib/rack/lock.rb:17:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/static.rb:64:in `call'
+  rack (1.5.5) lib/rack/sendfile.rb:112:in `call'
+  railties (4.1.6) lib/rails/engine.rb:514:in `call'
+  railties (4.1.6) lib/rails/application.rb:144:in `call'
+  rack (1.5.5) lib/rack/lock.rb:17:in `call'
+  rack (1.5.5) lib/rack/content_length.rb:14:in `call'
+  rack (1.5.5) lib/rack/handler/webrick.rb:60:in `service'
+  C:/RailsInstaller/Ruby2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:140:in `service'
+  C:/RailsInstaller/Ruby2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:96:in `run'
+  C:/RailsInstaller/Ruby2.3.0/lib/ruby/2.3.0/webrick/server.rb:296:in `block in start_thread'
+
+
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/_source.erb (1.0ms)
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (3.0ms)
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (2.0ms)
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (1280.1ms)
+
+
+Started GET "/order_items" for 127.0.0.1 at 2017-05-03 05:07:37 +0530
+
+ActionController::RoutingError (No route matches [GET] "/order_items"):
+  actionpack (4.1.6) lib/action_dispatch/middleware/debug_exceptions.rb:21:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.1.6) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.1.6) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.1.6) lib/rails/rack/logger.rb:20:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.5.5) lib/rack/methodoverride.rb:21:in `call'
+  rack (1.5.5) lib/rack/runtime.rb:17:in `call'
+  activesupport (4.1.6) lib/active_support/cache/strategy/local_cache_middleware.rb:26:in `call'
+  rack (1.5.5) lib/rack/lock.rb:17:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/static.rb:64:in `call'
+  rack (1.5.5) lib/rack/sendfile.rb:112:in `call'
+  railties (4.1.6) lib/rails/engine.rb:514:in `call'
+  railties (4.1.6) lib/rails/application.rb:144:in `call'
+  rack (1.5.5) lib/rack/lock.rb:17:in `call'
+  rack (1.5.5) lib/rack/content_length.rb:14:in `call'
+  rack (1.5.5) lib/rack/handler/webrick.rb:60:in `service'
+  C:/RailsInstaller/Ruby2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:140:in `service'
+  C:/RailsInstaller/Ruby2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:96:in `run'
+  C:/RailsInstaller/Ruby2.3.0/lib/ruby/2.3.0/webrick/server.rb:296:in `block in start_thread'
+
+
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.0ms)
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/routes/_route.html.erb (3.0ms)
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/routes/_table.html.erb (5.0ms)
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout (1215.1ms)
+
+
+Started GET "/order_items" for 127.0.0.1 at 2017-05-03 05:11:35 +0530
+
+ActionController::RoutingError (No route matches [GET] "/order_items"):
+  actionpack (4.1.6) lib/action_dispatch/middleware/debug_exceptions.rb:21:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.1.6) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.1.6) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.1.6) lib/rails/rack/logger.rb:20:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.5.5) lib/rack/methodoverride.rb:21:in `call'
+  rack (1.5.5) lib/rack/runtime.rb:17:in `call'
+  activesupport (4.1.6) lib/active_support/cache/strategy/local_cache_middleware.rb:26:in `call'
+  rack (1.5.5) lib/rack/lock.rb:17:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/static.rb:64:in `call'
+  rack (1.5.5) lib/rack/sendfile.rb:112:in `call'
+  railties (4.1.6) lib/rails/engine.rb:514:in `call'
+  railties (4.1.6) lib/rails/application.rb:144:in `call'
+  rack (1.5.5) lib/rack/lock.rb:17:in `call'
+  rack (1.5.5) lib/rack/content_length.rb:14:in `call'
+  rack (1.5.5) lib/rack/handler/webrick.rb:60:in `service'
+  C:/RailsInstaller/Ruby2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:140:in `service'
+  C:/RailsInstaller/Ruby2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:96:in `run'
+  C:/RailsInstaller/Ruby2.3.0/lib/ruby/2.3.0/webrick/server.rb:296:in `block in start_thread'
+
+
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.0ms)
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/routes/_route.html.erb (2.0ms)
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/routes/_table.html.erb (2.0ms)
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout (1103.1ms)
+
+
+Started POST "/order_items" for 127.0.0.1 at 2017-05-03 05:11:43 +0530
+Processing by OrderItemsController#create as HTML
+  Parameters: {"utf8"=>"✓", "order_item"=>{"quantity"=>"1", "product_id"=>"2"}, "commit"=>"Add to Cart"}
+Can't verify CSRF token authenticity
+Completed 422 Unprocessable Entity in 1ms
+
+ActionController::InvalidAuthenticityToken (ActionController::InvalidAuthenticityToken):
+  actionpack (4.1.6) lib/action_controller/metal/request_forgery_protection.rb:176:in `handle_unverified_request'
+  actionpack (4.1.6) lib/action_controller/metal/request_forgery_protection.rb:202:in `handle_unverified_request'
+  actionpack (4.1.6) lib/action_controller/metal/request_forgery_protection.rb:197:in `verify_authenticity_token'
+  activesupport (4.1.6) lib/active_support/callbacks.rb:424:in `block in make_lambda'
+  activesupport (4.1.6) lib/active_support/callbacks.rb:160:in `block in halting'
+  activesupport (4.1.6) lib/active_support/callbacks.rb:86:in `run_callbacks'
+  actionpack (4.1.6) lib/abstract_controller/callbacks.rb:19:in `process_action'
+  actionpack (4.1.6) lib/action_controller/metal/rescue.rb:29:in `process_action'
+  actionpack (4.1.6) lib/action_controller/metal/instrumentation.rb:31:in `block in process_action'
+  activesupport (4.1.6) lib/active_support/notifications.rb:159:in `block in instrument'
+  activesupport (4.1.6) lib/active_support/notifications/instrumenter.rb:20:in `instrument'
+  activesupport (4.1.6) lib/active_support/notifications.rb:159:in `instrument'
+  actionpack (4.1.6) lib/action_controller/metal/instrumentation.rb:30:in `process_action'
+  actionpack (4.1.6) lib/action_controller/metal/params_wrapper.rb:250:in `process_action'
+  activerecord (4.1.6) lib/active_record/railties/controller_runtime.rb:18:in `process_action'
+  actionpack (4.1.6) lib/abstract_controller/base.rb:136:in `process'
+  actionview (4.1.6) lib/action_view/rendering.rb:30:in `process'
+  actionpack (4.1.6) lib/action_controller/metal.rb:196:in `dispatch'
+  actionpack (4.1.6) lib/action_controller/metal/rack_delegation.rb:13:in `dispatch'
+  actionpack (4.1.6) lib/action_controller/metal.rb:232:in `block in action'
+  actionpack (4.1.6) lib/action_dispatch/routing/route_set.rb:82:in `dispatch'
+  actionpack (4.1.6) lib/action_dispatch/routing/route_set.rb:50:in `call'
+  actionpack (4.1.6) lib/action_dispatch/journey/router.rb:73:in `block in call'
+  actionpack (4.1.6) lib/action_dispatch/journey/router.rb:59:in `each'
+  actionpack (4.1.6) lib/action_dispatch/journey/router.rb:59:in `call'
+  actionpack (4.1.6) lib/action_dispatch/routing/route_set.rb:678:in `call'
+  rack (1.5.5) lib/rack/etag.rb:23:in `call'
+  rack (1.5.5) lib/rack/conditionalget.rb:35:in `call'
+  rack (1.5.5) lib/rack/head.rb:11:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/params_parser.rb:27:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/flash.rb:254:in `call'
+  rack (1.5.5) lib/rack/session/abstract/id.rb:225:in `context'
+  rack (1.5.5) lib/rack/session/abstract/id.rb:220:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/cookies.rb:560:in `call'
+  activerecord (4.1.6) lib/active_record/query_cache.rb:36:in `call'
+  activerecord (4.1.6) lib/active_record/connection_adapters/abstract/connection_pool.rb:621:in `call'
+  activerecord (4.1.6) lib/active_record/migration.rb:380:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/callbacks.rb:29:in `block in call'
+  activesupport (4.1.6) lib/active_support/callbacks.rb:82:in `run_callbacks'
+  actionpack (4.1.6) lib/action_dispatch/middleware/callbacks.rb:27:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/reloader.rb:73:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/remote_ip.rb:76:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/debug_exceptions.rb:17:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.1.6) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.1.6) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.1.6) lib/rails/rack/logger.rb:20:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.5.5) lib/rack/methodoverride.rb:21:in `call'
+  rack (1.5.5) lib/rack/runtime.rb:17:in `call'
+  activesupport (4.1.6) lib/active_support/cache/strategy/local_cache_middleware.rb:26:in `call'
+  rack (1.5.5) lib/rack/lock.rb:17:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/static.rb:64:in `call'
+  rack (1.5.5) lib/rack/sendfile.rb:112:in `call'
+  railties (4.1.6) lib/rails/engine.rb:514:in `call'
+  railties (4.1.6) lib/rails/application.rb:144:in `call'
+  rack (1.5.5) lib/rack/lock.rb:17:in `call'
+  rack (1.5.5) lib/rack/content_length.rb:14:in `call'
+  rack (1.5.5) lib/rack/handler/webrick.rb:60:in `service'
+  C:/RailsInstaller/Ruby2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:140:in `service'
+  C:/RailsInstaller/Ruby2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:96:in `run'
+  C:/RailsInstaller/Ruby2.3.0/lib/ruby/2.3.0/webrick/server.rb:296:in `block in start_thread'
+
+
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/_source.erb (1.0ms)
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (3.0ms)
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (2.0ms)
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (1222.1ms)
+
+
+Started GET "/cart" for 127.0.0.1 at 2017-05-03 05:11:53 +0530
+
+ActionController::RoutingError (No route matches [GET] "/cart"):
+  actionpack (4.1.6) lib/action_dispatch/middleware/debug_exceptions.rb:21:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.1.6) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.1.6) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.1.6) lib/rails/rack/logger.rb:20:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.5.5) lib/rack/methodoverride.rb:21:in `call'
+  rack (1.5.5) lib/rack/runtime.rb:17:in `call'
+  activesupport (4.1.6) lib/active_support/cache/strategy/local_cache_middleware.rb:26:in `call'
+  rack (1.5.5) lib/rack/lock.rb:17:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/static.rb:64:in `call'
+  rack (1.5.5) lib/rack/sendfile.rb:112:in `call'
+  railties (4.1.6) lib/rails/engine.rb:514:in `call'
+  railties (4.1.6) lib/rails/application.rb:144:in `call'
+  rack (1.5.5) lib/rack/lock.rb:17:in `call'
+  rack (1.5.5) lib/rack/content_length.rb:14:in `call'
+  rack (1.5.5) lib/rack/handler/webrick.rb:60:in `service'
+  C:/RailsInstaller/Ruby2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:140:in `service'
+  C:/RailsInstaller/Ruby2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:96:in `run'
+  C:/RailsInstaller/Ruby2.3.0/lib/ruby/2.3.0/webrick/server.rb:296:in `block in start_thread'
+
+
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.0ms)
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/routes/_route.html.erb (7.0ms)
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/routes/_table.html.erb (2.0ms)
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout (1139.1ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-05-03 05:12:13 +0530
+Processing by ProductsController#index as HTML
+  [1m[36mProduct Load (1.0ms)[0m  [1mSELECT "products".* FROM "products"  WHERE "products"."active" = 't'[0m
+  Rendered products/_product_row.html.erb (4.0ms)
+  Rendered products/_product_row.html.erb (2.0ms)
+  Rendered products/_product_row.html.erb (2.0ms)
+  Rendered products/index.html.erb within layouts/application (91.0ms)
+  Rendered layouts/_cart_text.html.erb (113.0ms)
+Completed 500 Internal Server Error in 452ms
+
+ActionView::Template::Error (undefined local variable or method `cart_path' for #<#<Class:0x5d40500>:0x5d33600>
+Did you mean?  carts_path
+               root_path):
+    1: <%= link_to "#{current_order.order_items.size} Items in Cart ( #{number_to_currency current_order.subtotal} )", cart_path, class: "btn btn-link" %>
+  app/views/layouts/_cart_text.html.erb:1:in `_app_views_layouts__cart_text_html_erb__78992182_47694876'
+  app/views/layouts/application.html.erb:24:in `_app_views_layouts_application_html_erb__496524030_35791572'
+
+
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (3.0ms)
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.0ms)
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/template_error.html.erb within rescues/layout (715.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-05-03 05:13:27 +0530
+Processing by ProductsController#index as HTML
+  [1m[35mProduct Load (1.0ms)[0m  SELECT "products".* FROM "products"  WHERE "products"."active" = 't'
+  Rendered products/_product_row.html.erb (4.0ms)
+  Rendered products/_product_row.html.erb (2.0ms)
+  Rendered products/_product_row.html.erb (3.0ms)
+  Rendered products/index.html.erb within layouts/application (94.0ms)
+  Rendered layouts/_cart_text.html.erb (3.0ms)
+Completed 200 OK in 317ms (Views: 312.4ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2017-05-03 05:13:28 +0530
+
+
+Started GET "/assets/products.css?body=1" for 127.0.0.1 at 2017-05-03 05:13:28 +0530
+
+
+Started GET "/assets/order_items.css?body=1" for 127.0.0.1 at 2017-05-03 05:13:28 +0530
+
+
+Started GET "/assets/carts.css?body=1" for 127.0.0.1 at 2017-05-03 05:13:28 +0530
+
+
+Started GET "/carts" for 127.0.0.1 at 2017-05-03 05:13:31 +0530
+Processing by CartsController#show as HTML
+  Rendered carts/_shopping_cart.html.erb (2.0ms)
+  Rendered carts/show.html.erb within layouts/application (28.0ms)
+  Rendered layouts/_cart_text.html.erb (2.0ms)
+Completed 200 OK in 251ms (Views: 249.1ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/carts.css?body=1" for 127.0.0.1 at 2017-05-03 05:13:32 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2017-05-03 05:13:32 +0530
+
+
+Started GET "/assets/order_items.css?body=1" for 127.0.0.1 at 2017-05-03 05:13:32 +0530
+
+
+Started GET "/assets/products.css?body=1" for 127.0.0.1 at 2017-05-03 05:13:32 +0530
+
+
+Started GET "/" for 127.0.0.1 at 2017-05-03 05:13:37 +0530
+Processing by ProductsController#index as HTML
+  [1m[36mProduct Load (0.0ms)[0m  [1mSELECT "products".* FROM "products"  WHERE "products"."active" = 't'[0m
+  Rendered products/_product_row.html.erb (2.0ms)
+  Rendered products/_product_row.html.erb (3.0ms)
+  Rendered products/_product_row.html.erb (2.0ms)
+  Rendered products/index.html.erb within layouts/application (88.0ms)
+  Rendered layouts/_cart_text.html.erb (2.0ms)
+Completed 200 OK in 302ms (Views: 298.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/products.css?body=1" for 127.0.0.1 at 2017-05-03 05:13:37 +0530
+
+
+Started GET "/assets/order_items.css?body=1" for 127.0.0.1 at 2017-05-03 05:13:37 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2017-05-03 05:13:37 +0530
+
+
+Started GET "/assets/carts.css?body=1" for 127.0.0.1 at 2017-05-03 05:13:37 +0530
+
+
+Started GET "/" for 127.0.0.1 at 2017-05-03 05:13:48 +0530
+Processing by ProductsController#index as HTML
+  [1m[35mProduct Load (0.0ms)[0m  SELECT "products".* FROM "products"  WHERE "products"."active" = 't'
+  Rendered products/_product_row.html.erb (3.0ms)
+  Rendered products/_product_row.html.erb (3.0ms)
+  Rendered products/_product_row.html.erb (2.0ms)
+  Rendered products/index.html.erb within layouts/application (89.0ms)
+  Rendered layouts/_cart_text.html.erb (2.0ms)
+Completed 200 OK in 318ms (Views: 316.1ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/order_items.css?body=1" for 127.0.0.1 at 2017-05-03 05:13:48 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2017-05-03 05:13:48 +0530
+
+
+Started GET "/assets/products.css?body=1" for 127.0.0.1 at 2017-05-03 05:13:49 +0530
+
+
+Started GET "/assets/carts.css?body=1" for 127.0.0.1 at 2017-05-03 05:13:49 +0530
+
+
+Started GET "/" for 127.0.0.1 at 2017-05-03 09:45:51 +0530
+  [1m[36mActiveRecord::SchemaMigration Load (1.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by ProductsController#index as HTML
+  [1m[35mProduct Load (1.0ms)[0m  SELECT "products".* FROM "products"  WHERE "products"."active" = 't'
+  Rendered products/_product_row.html.erb (202.0ms)
+  Rendered products/_product_row.html.erb (3.0ms)
+  Rendered products/_product_row.html.erb (11.0ms)
+  Rendered products/index.html.erb within layouts/application (348.0ms)
+  Rendered layouts/_cart_text.html.erb (3.0ms)
+Completed 200 OK in 988ms (Views: 793.5ms | ActiveRecord: 5.0ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2017-05-03 09:46:00 +0530
+
+
+Started GET "/assets/order_items.css?body=1" for 127.0.0.1 at 2017-05-03 09:46:00 +0530
+
+
+Started GET "/assets/products.css?body=1" for 127.0.0.1 at 2017-05-03 09:46:00 +0530
+
+
+Started GET "/assets/carts.css?body=1" for 127.0.0.1 at 2017-05-03 09:46:00 +0530
+
+
+Started GET "/carts" for 127.0.0.1 at 2017-05-03 09:46:04 +0530
+Processing by CartsController#show as HTML
+  Rendered carts/_shopping_cart.html.erb (2.0ms)
+  Rendered carts/show.html.erb within layouts/application (59.0ms)
+  Rendered layouts/_cart_text.html.erb (2.0ms)
+Completed 200 OK in 291ms (Views: 289.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/products.css?body=1" for 127.0.0.1 at 2017-05-03 09:46:04 +0530
+
+
+Started GET "/assets/order_items.css?body=1" for 127.0.0.1 at 2017-05-03 09:46:04 +0530
+
+
+Started GET "/assets/carts.css?body=1" for 127.0.0.1 at 2017-05-03 09:46:04 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2017-05-03 09:46:04 +0530
+
+
+Started GET "/" for 127.0.0.1 at 2017-05-03 09:46:08 +0530
+Processing by ProductsController#index as HTML
+  [1m[36mProduct Load (1.0ms)[0m  [1mSELECT "products".* FROM "products"  WHERE "products"."active" = 't'[0m
+  Rendered products/_product_row.html.erb (3.0ms)
+  Rendered products/_product_row.html.erb (2.0ms)
+  Rendered products/_product_row.html.erb (2.0ms)
+  Rendered products/index.html.erb within layouts/application (85.0ms)
+  Rendered layouts/_cart_text.html.erb (2.0ms)
+Completed 200 OK in 293ms (Views: 288.6ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/assets/carts.css?body=1" for 127.0.0.1 at 2017-05-03 09:46:08 +0530
+
+
+Started GET "/assets/products.css?body=1" for 127.0.0.1 at 2017-05-03 09:46:08 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2017-05-03 09:46:08 +0530
+
+
+Started GET "/assets/order_items.css?body=1" for 127.0.0.1 at 2017-05-03 09:46:08 +0530
+
+
+Started GET "/" for 127.0.0.1 at 2017-05-03 09:46:11 +0530
+Processing by ProductsController#index as HTML
+  [1m[35mProduct Load (0.0ms)[0m  SELECT "products".* FROM "products"  WHERE "products"."active" = 't'
+  Rendered products/_product_row.html.erb (3.0ms)
+  Rendered products/_product_row.html.erb (2.0ms)
+  Rendered products/_product_row.html.erb (2.0ms)
+  Rendered products/index.html.erb within layouts/application (99.0ms)
+  Rendered layouts/_cart_text.html.erb (4.0ms)
+Completed 200 OK in 312ms (Views: 309.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/carts.css?body=1" for 127.0.0.1 at 2017-05-03 09:46:12 +0530
+
+
+Started GET "/assets/products.css?body=1" for 127.0.0.1 at 2017-05-03 09:46:12 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2017-05-03 09:46:12 +0530
+
+
+Started GET "/assets/order_items.css?body=1" for 127.0.0.1 at 2017-05-03 09:46:12 +0530
+
+
+Started GET "/" for 127.0.0.1 at 2017-05-03 09:46:14 +0530
+Processing by ProductsController#index as HTML
+  [1m[36mProduct Load (1.0ms)[0m  [1mSELECT "products".* FROM "products"  WHERE "products"."active" = 't'[0m
+  Rendered products/_product_row.html.erb (2.0ms)
+  Rendered products/_product_row.html.erb (4.0ms)
+  Rendered products/_product_row.html.erb (2.0ms)
+  Rendered products/index.html.erb within layouts/application (93.0ms)
+  Rendered layouts/_cart_text.html.erb (2.0ms)
+Completed 200 OK in 314ms (Views: 311.0ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/assets/products.css?body=1" for 127.0.0.1 at 2017-05-03 09:46:14 +0530
+
+
+Started GET "/assets/order_items.css?body=1" for 127.0.0.1 at 2017-05-03 09:46:15 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2017-05-03 09:46:15 +0530
+
+
+Started GET "/assets/carts.css?body=1" for 127.0.0.1 at 2017-05-03 09:46:15 +0530
+
+
+Started POST "/order_items" for 127.0.0.1 at 2017-05-03 09:55:03 +0530
+Processing by OrderItemsController#create as HTML
+  Parameters: {"utf8"=>"✓", "order_item"=>{"quantity"=>"11", "product_id"=>"1"}, "commit"=>"Add to Cart"}
+Can't verify CSRF token authenticity
+Completed 422 Unprocessable Entity in 2ms
+
+ActionController::InvalidAuthenticityToken (ActionController::InvalidAuthenticityToken):
+  actionpack (4.1.6) lib/action_controller/metal/request_forgery_protection.rb:176:in `handle_unverified_request'
+  actionpack (4.1.6) lib/action_controller/metal/request_forgery_protection.rb:202:in `handle_unverified_request'
+  actionpack (4.1.6) lib/action_controller/metal/request_forgery_protection.rb:197:in `verify_authenticity_token'
+  activesupport (4.1.6) lib/active_support/callbacks.rb:424:in `block in make_lambda'
+  activesupport (4.1.6) lib/active_support/callbacks.rb:160:in `block in halting'
+  activesupport (4.1.6) lib/active_support/callbacks.rb:86:in `run_callbacks'
+  actionpack (4.1.6) lib/abstract_controller/callbacks.rb:19:in `process_action'
+  actionpack (4.1.6) lib/action_controller/metal/rescue.rb:29:in `process_action'
+  actionpack (4.1.6) lib/action_controller/metal/instrumentation.rb:31:in `block in process_action'
+  activesupport (4.1.6) lib/active_support/notifications.rb:159:in `block in instrument'
+  activesupport (4.1.6) lib/active_support/notifications/instrumenter.rb:20:in `instrument'
+  activesupport (4.1.6) lib/active_support/notifications.rb:159:in `instrument'
+  actionpack (4.1.6) lib/action_controller/metal/instrumentation.rb:30:in `process_action'
+  actionpack (4.1.6) lib/action_controller/metal/params_wrapper.rb:250:in `process_action'
+  activerecord (4.1.6) lib/active_record/railties/controller_runtime.rb:18:in `process_action'
+  actionpack (4.1.6) lib/abstract_controller/base.rb:136:in `process'
+  actionview (4.1.6) lib/action_view/rendering.rb:30:in `process'
+  actionpack (4.1.6) lib/action_controller/metal.rb:196:in `dispatch'
+  actionpack (4.1.6) lib/action_controller/metal/rack_delegation.rb:13:in `dispatch'
+  actionpack (4.1.6) lib/action_controller/metal.rb:232:in `block in action'
+  actionpack (4.1.6) lib/action_dispatch/routing/route_set.rb:82:in `dispatch'
+  actionpack (4.1.6) lib/action_dispatch/routing/route_set.rb:50:in `call'
+  actionpack (4.1.6) lib/action_dispatch/journey/router.rb:73:in `block in call'
+  actionpack (4.1.6) lib/action_dispatch/journey/router.rb:59:in `each'
+  actionpack (4.1.6) lib/action_dispatch/journey/router.rb:59:in `call'
+  actionpack (4.1.6) lib/action_dispatch/routing/route_set.rb:678:in `call'
+  rack (1.5.5) lib/rack/etag.rb:23:in `call'
+  rack (1.5.5) lib/rack/conditionalget.rb:35:in `call'
+  rack (1.5.5) lib/rack/head.rb:11:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/params_parser.rb:27:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/flash.rb:254:in `call'
+  rack (1.5.5) lib/rack/session/abstract/id.rb:225:in `context'
+  rack (1.5.5) lib/rack/session/abstract/id.rb:220:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/cookies.rb:560:in `call'
+  activerecord (4.1.6) lib/active_record/query_cache.rb:36:in `call'
+  activerecord (4.1.6) lib/active_record/connection_adapters/abstract/connection_pool.rb:621:in `call'
+  activerecord (4.1.6) lib/active_record/migration.rb:380:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/callbacks.rb:29:in `block in call'
+  activesupport (4.1.6) lib/active_support/callbacks.rb:82:in `run_callbacks'
+  actionpack (4.1.6) lib/action_dispatch/middleware/callbacks.rb:27:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/reloader.rb:73:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/remote_ip.rb:76:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/debug_exceptions.rb:17:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.1.6) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.1.6) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.1.6) lib/rails/rack/logger.rb:20:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.5.5) lib/rack/methodoverride.rb:21:in `call'
+  rack (1.5.5) lib/rack/runtime.rb:17:in `call'
+  activesupport (4.1.6) lib/active_support/cache/strategy/local_cache_middleware.rb:26:in `call'
+  rack (1.5.5) lib/rack/lock.rb:17:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/static.rb:64:in `call'
+  rack (1.5.5) lib/rack/sendfile.rb:112:in `call'
+  railties (4.1.6) lib/rails/engine.rb:514:in `call'
+  railties (4.1.6) lib/rails/application.rb:144:in `call'
+  rack (1.5.5) lib/rack/lock.rb:17:in `call'
+  rack (1.5.5) lib/rack/content_length.rb:14:in `call'
+  rack (1.5.5) lib/rack/handler/webrick.rb:60:in `service'
+  C:/RailsInstaller/Ruby2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:140:in `service'
+  C:/RailsInstaller/Ruby2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:96:in `run'
+  C:/RailsInstaller/Ruby2.3.0/lib/ruby/2.3.0/webrick/server.rb:296:in `block in start_thread'
+
+
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/_source.erb (1.0ms)
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.0ms)
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (2.0ms)
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (1342.1ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-05-03 10:12:47 +0530
+Processing by ProductsController#index as HTML
+  [1m[35mProduct Load (0.0ms)[0m  SELECT "products".* FROM "products"  WHERE "products"."active" = 't'
+  Rendered products/_product_row.html.erb (2.0ms)
+  Rendered products/_product_row.html.erb (1.0ms)
+  Rendered products/_product_row.html.erb (1.0ms)
+  Rendered products/index.html.erb within layouts/application (55.0ms)
+  Rendered layouts/_cart_text.html.erb (1.0ms)
+Completed 200 OK in 245ms (Views: 243.8ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/carts.css?body=1" for 127.0.0.1 at 2017-05-03 10:12:47 +0530
+
+
+Started GET "/assets/order_items.css?body=1" for 127.0.0.1 at 2017-05-03 10:12:47 +0530
+
+
+Started GET "/assets/products.css?body=1" for 127.0.0.1 at 2017-05-03 10:12:47 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2017-05-03 10:12:47 +0530
+
+
+Started GET "/" for 127.0.0.1 at 2017-05-03 10:13:01 +0530
+Processing by ProductsController#index as HTML
+  [1m[36mProduct Load (0.0ms)[0m  [1mSELECT "products".* FROM "products"  WHERE "products"."active" = 't'[0m
+  Rendered products/_product_row.html.erb (2.0ms)
+  Rendered products/_product_row.html.erb (1.0ms)
+  Rendered products/_product_row.html.erb (2.0ms)
+  Rendered products/index.html.erb within layouts/application (38.0ms)
+  Rendered layouts/_cart_text.html.erb (1.0ms)
+Completed 200 OK in 136ms (Views: 135.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/carts.css?body=1" for 127.0.0.1 at 2017-05-03 10:13:01 +0530
+
+
+Started GET "/assets/order_items.css?body=1" for 127.0.0.1 at 2017-05-03 10:13:01 +0530
+
+
+Started GET "/assets/products.css?body=1" for 127.0.0.1 at 2017-05-03 10:13:01 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2017-05-03 10:13:01 +0530
+
+
+Started GET "/carts" for 127.0.0.1 at 2017-05-03 10:13:05 +0530
+Processing by CartsController#show as HTML
+  Rendered carts/_shopping_cart.html.erb (0.0ms)
+  Rendered carts/show.html.erb within layouts/application (26.0ms)
+  Rendered layouts/_cart_text.html.erb (1.0ms)
+Completed 200 OK in 116ms (Views: 114.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/order_items.css?body=1" for 127.0.0.1 at 2017-05-03 10:13:06 +0530
+
+
+Started GET "/assets/products.css?body=1" for 127.0.0.1 at 2017-05-03 10:13:06 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2017-05-03 10:13:06 +0530
+
+
+Started GET "/assets/carts.css?body=1" for 127.0.0.1 at 2017-05-03 10:13:06 +0530
+
+
+Started GET "/" for 127.0.0.1 at 2017-05-03 10:13:09 +0530
+Processing by ProductsController#index as HTML
+  [1m[35mProduct Load (0.0ms)[0m  SELECT "products".* FROM "products"  WHERE "products"."active" = 't'
+  Rendered products/_product_row.html.erb (1.0ms)
+  Rendered products/_product_row.html.erb (1.0ms)
+  Rendered products/_product_row.html.erb (1.0ms)
+  Rendered products/index.html.erb within layouts/application (37.0ms)
+  Rendered layouts/_cart_text.html.erb (1.0ms)
+Completed 200 OK in 128ms (Views: 126.7ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/carts.css?body=1" for 127.0.0.1 at 2017-05-03 10:13:09 +0530
+
+
+Started GET "/assets/products.css?body=1" for 127.0.0.1 at 2017-05-03 10:13:09 +0530
+
+
+Started GET "/assets/order_items.css?body=1" for 127.0.0.1 at 2017-05-03 10:13:09 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2017-05-03 10:13:09 +0530
+
+
+Started POST "/order_items" for 127.0.0.1 at 2017-05-03 10:13:20 +0530
+Processing by OrderItemsController#create as HTML
+  Parameters: {"utf8"=>"✓", "order_item"=>{"quantity"=>"1", "product_id"=>"1"}, "commit"=>"Add to Cart"}
+Can't verify CSRF token authenticity
+Completed 422 Unprocessable Entity in 1ms
+
+ActionController::InvalidAuthenticityToken (ActionController::InvalidAuthenticityToken):
+  actionpack (4.1.6) lib/action_controller/metal/request_forgery_protection.rb:176:in `handle_unverified_request'
+  actionpack (4.1.6) lib/action_controller/metal/request_forgery_protection.rb:202:in `handle_unverified_request'
+  actionpack (4.1.6) lib/action_controller/metal/request_forgery_protection.rb:197:in `verify_authenticity_token'
+  activesupport (4.1.6) lib/active_support/callbacks.rb:424:in `block in make_lambda'
+  activesupport (4.1.6) lib/active_support/callbacks.rb:160:in `block in halting'
+  activesupport (4.1.6) lib/active_support/callbacks.rb:86:in `run_callbacks'
+  actionpack (4.1.6) lib/abstract_controller/callbacks.rb:19:in `process_action'
+  actionpack (4.1.6) lib/action_controller/metal/rescue.rb:29:in `process_action'
+  actionpack (4.1.6) lib/action_controller/metal/instrumentation.rb:31:in `block in process_action'
+  activesupport (4.1.6) lib/active_support/notifications.rb:159:in `block in instrument'
+  activesupport (4.1.6) lib/active_support/notifications/instrumenter.rb:20:in `instrument'
+  activesupport (4.1.6) lib/active_support/notifications.rb:159:in `instrument'
+  actionpack (4.1.6) lib/action_controller/metal/instrumentation.rb:30:in `process_action'
+  actionpack (4.1.6) lib/action_controller/metal/params_wrapper.rb:250:in `process_action'
+  activerecord (4.1.6) lib/active_record/railties/controller_runtime.rb:18:in `process_action'
+  actionpack (4.1.6) lib/abstract_controller/base.rb:136:in `process'
+  actionview (4.1.6) lib/action_view/rendering.rb:30:in `process'
+  actionpack (4.1.6) lib/action_controller/metal.rb:196:in `dispatch'
+  actionpack (4.1.6) lib/action_controller/metal/rack_delegation.rb:13:in `dispatch'
+  actionpack (4.1.6) lib/action_controller/metal.rb:232:in `block in action'
+  actionpack (4.1.6) lib/action_dispatch/routing/route_set.rb:82:in `dispatch'
+  actionpack (4.1.6) lib/action_dispatch/routing/route_set.rb:50:in `call'
+  actionpack (4.1.6) lib/action_dispatch/journey/router.rb:73:in `block in call'
+  actionpack (4.1.6) lib/action_dispatch/journey/router.rb:59:in `each'
+  actionpack (4.1.6) lib/action_dispatch/journey/router.rb:59:in `call'
+  actionpack (4.1.6) lib/action_dispatch/routing/route_set.rb:678:in `call'
+  rack (1.5.5) lib/rack/etag.rb:23:in `call'
+  rack (1.5.5) lib/rack/conditionalget.rb:35:in `call'
+  rack (1.5.5) lib/rack/head.rb:11:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/params_parser.rb:27:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/flash.rb:254:in `call'
+  rack (1.5.5) lib/rack/session/abstract/id.rb:225:in `context'
+  rack (1.5.5) lib/rack/session/abstract/id.rb:220:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/cookies.rb:560:in `call'
+  activerecord (4.1.6) lib/active_record/query_cache.rb:36:in `call'
+  activerecord (4.1.6) lib/active_record/connection_adapters/abstract/connection_pool.rb:621:in `call'
+  activerecord (4.1.6) lib/active_record/migration.rb:380:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/callbacks.rb:29:in `block in call'
+  activesupport (4.1.6) lib/active_support/callbacks.rb:82:in `run_callbacks'
+  actionpack (4.1.6) lib/action_dispatch/middleware/callbacks.rb:27:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/reloader.rb:73:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/remote_ip.rb:76:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/debug_exceptions.rb:17:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.1.6) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.1.6) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.1.6) lib/rails/rack/logger.rb:20:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.5.5) lib/rack/methodoverride.rb:21:in `call'
+  rack (1.5.5) lib/rack/runtime.rb:17:in `call'
+  activesupport (4.1.6) lib/active_support/cache/strategy/local_cache_middleware.rb:26:in `call'
+  rack (1.5.5) lib/rack/lock.rb:17:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/static.rb:64:in `call'
+  rack (1.5.5) lib/rack/sendfile.rb:112:in `call'
+  railties (4.1.6) lib/rails/engine.rb:514:in `call'
+  railties (4.1.6) lib/rails/application.rb:144:in `call'
+  rack (1.5.5) lib/rack/lock.rb:17:in `call'
+  rack (1.5.5) lib/rack/content_length.rb:14:in `call'
+  rack (1.5.5) lib/rack/handler/webrick.rb:60:in `service'
+  C:/RailsInstaller/Ruby2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:140:in `service'
+  C:/RailsInstaller/Ruby2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:96:in `run'
+  C:/RailsInstaller/Ruby2.3.0/lib/ruby/2.3.0/webrick/server.rb:296:in `block in start_thread'
+
+
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/_source.erb (1.0ms)
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.0ms)
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (2.0ms)
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (591.0ms)
+
+
+Started POST "/order_items" for 127.0.0.1 at 2017-05-03 10:15:14 +0530
+Processing by OrderItemsController#create as HTML
+  Parameters: {"utf8"=>"✓", "order_item"=>{"quantity"=>"1", "product_id"=>"1"}, "commit"=>"Add to Cart"}
+Can't verify CSRF token authenticity
+Completed 422 Unprocessable Entity in 2ms
+
+ActionController::InvalidAuthenticityToken (ActionController::InvalidAuthenticityToken):
+  actionpack (4.1.6) lib/action_controller/metal/request_forgery_protection.rb:176:in `handle_unverified_request'
+  actionpack (4.1.6) lib/action_controller/metal/request_forgery_protection.rb:202:in `handle_unverified_request'
+  actionpack (4.1.6) lib/action_controller/metal/request_forgery_protection.rb:197:in `verify_authenticity_token'
+  activesupport (4.1.6) lib/active_support/callbacks.rb:424:in `block in make_lambda'
+  activesupport (4.1.6) lib/active_support/callbacks.rb:160:in `block in halting'
+  activesupport (4.1.6) lib/active_support/callbacks.rb:86:in `run_callbacks'
+  actionpack (4.1.6) lib/abstract_controller/callbacks.rb:19:in `process_action'
+  actionpack (4.1.6) lib/action_controller/metal/rescue.rb:29:in `process_action'
+  actionpack (4.1.6) lib/action_controller/metal/instrumentation.rb:31:in `block in process_action'
+  activesupport (4.1.6) lib/active_support/notifications.rb:159:in `block in instrument'
+  activesupport (4.1.6) lib/active_support/notifications/instrumenter.rb:20:in `instrument'
+  activesupport (4.1.6) lib/active_support/notifications.rb:159:in `instrument'
+  actionpack (4.1.6) lib/action_controller/metal/instrumentation.rb:30:in `process_action'
+  actionpack (4.1.6) lib/action_controller/metal/params_wrapper.rb:250:in `process_action'
+  activerecord (4.1.6) lib/active_record/railties/controller_runtime.rb:18:in `process_action'
+  actionpack (4.1.6) lib/abstract_controller/base.rb:136:in `process'
+  actionview (4.1.6) lib/action_view/rendering.rb:30:in `process'
+  actionpack (4.1.6) lib/action_controller/metal.rb:196:in `dispatch'
+  actionpack (4.1.6) lib/action_controller/metal/rack_delegation.rb:13:in `dispatch'
+  actionpack (4.1.6) lib/action_controller/metal.rb:232:in `block in action'
+  actionpack (4.1.6) lib/action_dispatch/routing/route_set.rb:82:in `dispatch'
+  actionpack (4.1.6) lib/action_dispatch/routing/route_set.rb:50:in `call'
+  actionpack (4.1.6) lib/action_dispatch/journey/router.rb:73:in `block in call'
+  actionpack (4.1.6) lib/action_dispatch/journey/router.rb:59:in `each'
+  actionpack (4.1.6) lib/action_dispatch/journey/router.rb:59:in `call'
+  actionpack (4.1.6) lib/action_dispatch/routing/route_set.rb:678:in `call'
+  rack (1.5.5) lib/rack/etag.rb:23:in `call'
+  rack (1.5.5) lib/rack/conditionalget.rb:35:in `call'
+  rack (1.5.5) lib/rack/head.rb:11:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/params_parser.rb:27:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/flash.rb:254:in `call'
+  rack (1.5.5) lib/rack/session/abstract/id.rb:225:in `context'
+  rack (1.5.5) lib/rack/session/abstract/id.rb:220:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/cookies.rb:560:in `call'
+  activerecord (4.1.6) lib/active_record/query_cache.rb:36:in `call'
+  activerecord (4.1.6) lib/active_record/connection_adapters/abstract/connection_pool.rb:621:in `call'
+  activerecord (4.1.6) lib/active_record/migration.rb:380:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/callbacks.rb:29:in `block in call'
+  activesupport (4.1.6) lib/active_support/callbacks.rb:82:in `run_callbacks'
+  actionpack (4.1.6) lib/action_dispatch/middleware/callbacks.rb:27:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/reloader.rb:73:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/remote_ip.rb:76:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/debug_exceptions.rb:17:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.1.6) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.1.6) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.1.6) lib/rails/rack/logger.rb:20:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.5.5) lib/rack/methodoverride.rb:21:in `call'
+  rack (1.5.5) lib/rack/runtime.rb:17:in `call'
+  activesupport (4.1.6) lib/active_support/cache/strategy/local_cache_middleware.rb:26:in `call'
+  rack (1.5.5) lib/rack/lock.rb:17:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/static.rb:64:in `call'
+  rack (1.5.5) lib/rack/sendfile.rb:112:in `call'
+  railties (4.1.6) lib/rails/engine.rb:514:in `call'
+  railties (4.1.6) lib/rails/application.rb:144:in `call'
+  rack (1.5.5) lib/rack/lock.rb:17:in `call'
+  rack (1.5.5) lib/rack/content_length.rb:14:in `call'
+  rack (1.5.5) lib/rack/handler/webrick.rb:60:in `service'
+  C:/RailsInstaller/Ruby2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:140:in `service'
+  C:/RailsInstaller/Ruby2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:96:in `run'
+  C:/RailsInstaller/Ruby2.3.0/lib/ruby/2.3.0/webrick/server.rb:296:in `block in start_thread'
+
+
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/_source.erb (1.0ms)
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (3.0ms)
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (2.0ms)
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (1242.1ms)
+
+
+Started GET "/carts" for 127.0.0.1 at 2017-05-03 11:32:57 +0530
+Processing by CartsController#show as HTML
+  Rendered carts/_shopping_cart.html.erb (0.0ms)
+  Rendered carts/show.html.erb within layouts/application (10.0ms)
+  Rendered layouts/_cart_text.html.erb (1.0ms)
+Completed 200 OK in 104ms (Views: 102.6ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/carts.css?body=1" for 127.0.0.1 at 2017-05-03 11:32:58 +0530
+
+
+Started GET "/assets/order_items.css?body=1" for 127.0.0.1 at 2017-05-03 11:32:58 +0530
+
+
+Started GET "/assets/products.css?body=1" for 127.0.0.1 at 2017-05-03 11:32:58 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2017-05-03 11:32:58 +0530
+
+
+Started GET "/" for 127.0.0.1 at 2017-05-03 11:33:00 +0530
+Processing by ProductsController#index as HTML
+  [1m[36mProduct Load (1.0ms)[0m  [1mSELECT "products".* FROM "products"  WHERE "products"."active" = 't'[0m
+  Rendered products/_product_row.html.erb (1.0ms)
+  Rendered products/_product_row.html.erb (1.0ms)
+  Rendered products/_product_row.html.erb (1.0ms)
+  Rendered products/index.html.erb within layouts/application (36.0ms)
+  Rendered layouts/_cart_text.html.erb (1.0ms)
+Completed 200 OK in 127ms (Views: 125.5ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/assets/products.css?body=1" for 127.0.0.1 at 2017-05-03 11:33:00 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2017-05-03 11:33:00 +0530
+
+
+Started GET "/assets/carts.css?body=1" for 127.0.0.1 at 2017-05-03 11:33:00 +0530
+
+
+Started GET "/assets/order_items.css?body=1" for 127.0.0.1 at 2017-05-03 11:33:01 +0530
+
+
+Started GET "/" for 127.0.0.1 at 2017-05-03 11:33:02 +0530
+Processing by ProductsController#index as HTML
+  [1m[35mProduct Load (0.0ms)[0m  SELECT "products".* FROM "products"  WHERE "products"."active" = 't'
+  Rendered products/_product_row.html.erb (1.0ms)
+  Rendered products/_product_row.html.erb (1.0ms)
+  Rendered products/_product_row.html.erb (2.0ms)
+  Rendered products/index.html.erb within layouts/application (37.0ms)
+  Rendered layouts/_cart_text.html.erb (1.0ms)
+Completed 200 OK in 130ms (Views: 128.7ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/order_items.css?body=1" for 127.0.0.1 at 2017-05-03 11:33:02 +0530
+
+
+Started GET "/assets/products.css?body=1" for 127.0.0.1 at 2017-05-03 11:33:02 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2017-05-03 11:33:02 +0530
+
+
+Started GET "/assets/carts.css?body=1" for 127.0.0.1 at 2017-05-03 11:33:02 +0530
+
+
+Started GET "/" for 127.0.0.1 at 2017-05-03 11:33:04 +0530
+Processing by ProductsController#index as HTML
+  [1m[36mProduct Load (0.0ms)[0m  [1mSELECT "products".* FROM "products"  WHERE "products"."active" = 't'[0m
+  Rendered products/_product_row.html.erb (1.0ms)
+  Rendered products/_product_row.html.erb (1.0ms)
+  Rendered products/_product_row.html.erb (1.0ms)
+  Rendered products/index.html.erb within layouts/application (37.0ms)
+  Rendered layouts/_cart_text.html.erb (1.0ms)
+Completed 200 OK in 128ms (Views: 126.5ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/products.css?body=1" for 127.0.0.1 at 2017-05-03 11:33:04 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2017-05-03 11:33:04 +0530
+
+
+Started GET "/assets/order_items.css?body=1" for 127.0.0.1 at 2017-05-03 11:33:04 +0530
+
+
+Started GET "/assets/carts.css?body=1" for 127.0.0.1 at 2017-05-03 11:33:04 +0530
+
+
+Started GET "/carts" for 127.0.0.1 at 2017-05-03 11:33:06 +0530
+Processing by CartsController#show as HTML
+  Rendered carts/_shopping_cart.html.erb (0.0ms)
+  Rendered carts/show.html.erb within layouts/application (14.0ms)
+  Rendered layouts/_cart_text.html.erb (1.0ms)
+Completed 200 OK in 161ms (Views: 160.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/carts.css?body=1" for 127.0.0.1 at 2017-05-03 11:33:06 +0530
+
+
+Started GET "/assets/order_items.css?body=1" for 127.0.0.1 at 2017-05-03 11:33:06 +0530
+
+
+Started GET "/assets/products.css?body=1" for 127.0.0.1 at 2017-05-03 11:33:06 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2017-05-03 11:33:06 +0530
+
+
+Started GET "/" for 127.0.0.1 at 2017-05-03 11:33:08 +0530
+Processing by ProductsController#index as HTML
+  [1m[35mProduct Load (1.0ms)[0m  SELECT "products".* FROM "products"  WHERE "products"."active" = 't'
+  Rendered products/_product_row.html.erb (2.0ms)
+  Rendered products/_product_row.html.erb (1.0ms)
+  Rendered products/_product_row.html.erb (1.0ms)
+  Rendered products/index.html.erb within layouts/application (37.0ms)
+  Rendered layouts/_cart_text.html.erb (2.0ms)
+Completed 200 OK in 125ms (Views: 123.4ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/assets/order_items.css?body=1" for 127.0.0.1 at 2017-05-03 11:33:08 +0530
+
+
+Started GET "/assets/carts.css?body=1" for 127.0.0.1 at 2017-05-03 11:33:08 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2017-05-03 11:33:08 +0530
+
+
+Started GET "/assets/products.css?body=1" for 127.0.0.1 at 2017-05-03 11:33:08 +0530
+
+
+Started POST "/order_items" for 127.0.0.1 at 2017-05-03 11:33:15 +0530
+Processing by OrderItemsController#create as HTML
+  Parameters: {"utf8"=>"✓", "order_item"=>{"quantity"=>"1", "product_id"=>"1"}, "commit"=>"Add to Cart"}
+Can't verify CSRF token authenticity
+Completed 422 Unprocessable Entity in 1ms
+
+ActionController::InvalidAuthenticityToken (ActionController::InvalidAuthenticityToken):
+  actionpack (4.1.6) lib/action_controller/metal/request_forgery_protection.rb:176:in `handle_unverified_request'
+  actionpack (4.1.6) lib/action_controller/metal/request_forgery_protection.rb:202:in `handle_unverified_request'
+  actionpack (4.1.6) lib/action_controller/metal/request_forgery_protection.rb:197:in `verify_authenticity_token'
+  activesupport (4.1.6) lib/active_support/callbacks.rb:424:in `block in make_lambda'
+  activesupport (4.1.6) lib/active_support/callbacks.rb:160:in `block in halting'
+  activesupport (4.1.6) lib/active_support/callbacks.rb:86:in `run_callbacks'
+  actionpack (4.1.6) lib/abstract_controller/callbacks.rb:19:in `process_action'
+  actionpack (4.1.6) lib/action_controller/metal/rescue.rb:29:in `process_action'
+  actionpack (4.1.6) lib/action_controller/metal/instrumentation.rb:31:in `block in process_action'
+  activesupport (4.1.6) lib/active_support/notifications.rb:159:in `block in instrument'
+  activesupport (4.1.6) lib/active_support/notifications/instrumenter.rb:20:in `instrument'
+  activesupport (4.1.6) lib/active_support/notifications.rb:159:in `instrument'
+  actionpack (4.1.6) lib/action_controller/metal/instrumentation.rb:30:in `process_action'
+  actionpack (4.1.6) lib/action_controller/metal/params_wrapper.rb:250:in `process_action'
+  activerecord (4.1.6) lib/active_record/railties/controller_runtime.rb:18:in `process_action'
+  actionpack (4.1.6) lib/abstract_controller/base.rb:136:in `process'
+  actionview (4.1.6) lib/action_view/rendering.rb:30:in `process'
+  actionpack (4.1.6) lib/action_controller/metal.rb:196:in `dispatch'
+  actionpack (4.1.6) lib/action_controller/metal/rack_delegation.rb:13:in `dispatch'
+  actionpack (4.1.6) lib/action_controller/metal.rb:232:in `block in action'
+  actionpack (4.1.6) lib/action_dispatch/routing/route_set.rb:82:in `dispatch'
+  actionpack (4.1.6) lib/action_dispatch/routing/route_set.rb:50:in `call'
+  actionpack (4.1.6) lib/action_dispatch/journey/router.rb:73:in `block in call'
+  actionpack (4.1.6) lib/action_dispatch/journey/router.rb:59:in `each'
+  actionpack (4.1.6) lib/action_dispatch/journey/router.rb:59:in `call'
+  actionpack (4.1.6) lib/action_dispatch/routing/route_set.rb:678:in `call'
+  rack (1.5.5) lib/rack/etag.rb:23:in `call'
+  rack (1.5.5) lib/rack/conditionalget.rb:35:in `call'
+  rack (1.5.5) lib/rack/head.rb:11:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/params_parser.rb:27:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/flash.rb:254:in `call'
+  rack (1.5.5) lib/rack/session/abstract/id.rb:225:in `context'
+  rack (1.5.5) lib/rack/session/abstract/id.rb:220:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/cookies.rb:560:in `call'
+  activerecord (4.1.6) lib/active_record/query_cache.rb:36:in `call'
+  activerecord (4.1.6) lib/active_record/connection_adapters/abstract/connection_pool.rb:621:in `call'
+  activerecord (4.1.6) lib/active_record/migration.rb:380:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/callbacks.rb:29:in `block in call'
+  activesupport (4.1.6) lib/active_support/callbacks.rb:82:in `run_callbacks'
+  actionpack (4.1.6) lib/action_dispatch/middleware/callbacks.rb:27:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/reloader.rb:73:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/remote_ip.rb:76:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/debug_exceptions.rb:17:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.1.6) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.1.6) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.1.6) lib/rails/rack/logger.rb:20:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.5.5) lib/rack/methodoverride.rb:21:in `call'
+  rack (1.5.5) lib/rack/runtime.rb:17:in `call'
+  activesupport (4.1.6) lib/active_support/cache/strategy/local_cache_middleware.rb:26:in `call'
+  rack (1.5.5) lib/rack/lock.rb:17:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/static.rb:64:in `call'
+  rack (1.5.5) lib/rack/sendfile.rb:112:in `call'
+  railties (4.1.6) lib/rails/engine.rb:514:in `call'
+  railties (4.1.6) lib/rails/application.rb:144:in `call'
+  rack (1.5.5) lib/rack/lock.rb:17:in `call'
+  rack (1.5.5) lib/rack/content_length.rb:14:in `call'
+  rack (1.5.5) lib/rack/handler/webrick.rb:60:in `service'
+  C:/RailsInstaller/Ruby2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:140:in `service'
+  C:/RailsInstaller/Ruby2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:96:in `run'
+  C:/RailsInstaller/Ruby2.3.0/lib/ruby/2.3.0/webrick/server.rb:296:in `block in start_thread'
+
+
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/_source.erb (1.0ms)
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.0ms)
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.0ms)
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (624.0ms)
+
+
+Started GET "/carts" for 127.0.0.1 at 2017-05-03 11:36:08 +0530
+Processing by CartsController#show as HTML
+  Rendered carts/_shopping_cart.html.erb (0.0ms)
+  Rendered carts/show.html.erb within layouts/application (26.0ms)
+  Rendered layouts/_cart_text.html.erb (2.0ms)
+Completed 200 OK in 255ms (Views: 252.5ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/order_items.css?body=1" for 127.0.0.1 at 2017-05-03 11:36:08 +0530
+
+
+Started GET "/assets/carts.css?body=1" for 127.0.0.1 at 2017-05-03 11:36:09 +0530
+
+
+Started GET "/assets/products.css?body=1" for 127.0.0.1 at 2017-05-03 11:36:09 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2017-05-03 11:36:09 +0530
+
+
+Started GET "/" for 127.0.0.1 at 2017-05-03 11:51:44 +0530
+Processing by ProductsController#index as HTML
+  [1m[36mProduct Load (0.0ms)[0m  [1mSELECT "products".* FROM "products"  WHERE "products"."active" = 't'[0m
+  Rendered products/_product_row.html.erb (3.0ms)
+  Rendered products/_product_row.html.erb (2.0ms)
+  Rendered products/_product_row.html.erb (2.0ms)
+  Rendered products/index.html.erb within layouts/application (89.0ms)
+  Rendered layouts/_cart_text.html.erb (2.0ms)
+Completed 200 OK in 321ms (Views: 317.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/order_items.css?body=1" for 127.0.0.1 at 2017-05-03 11:51:44 +0530
+
+
+Started GET "/assets/products.css?body=1" for 127.0.0.1 at 2017-05-03 11:51:44 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2017-05-03 11:51:44 +0530
+
+
+Started GET "/assets/carts.css?body=1" for 127.0.0.1 at 2017-05-03 11:51:44 +0530
+
+
+Started GET "/carts" for 127.0.0.1 at 2017-05-03 11:51:53 +0530
+Processing by CartsController#show as HTML
+  Rendered carts/_shopping_cart.html.erb (1.0ms)
+  Rendered carts/show.html.erb within layouts/application (26.0ms)
+  Rendered layouts/_cart_text.html.erb (2.0ms)
+Completed 200 OK in 255ms (Views: 254.1ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/carts.css?body=1" for 127.0.0.1 at 2017-05-03 11:51:54 +0530
+
+
+Started GET "/assets/products.css?body=1" for 127.0.0.1 at 2017-05-03 11:51:54 +0530
+
+
+Started GET "/assets/order_items.css?body=1" for 127.0.0.1 at 2017-05-03 11:51:54 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2017-05-03 11:51:54 +0530
+
+
+Started GET "/" for 127.0.0.1 at 2017-05-03 12:53:31 +0530
+Processing by ProductsController#index as HTML
+  [1m[35mProduct Load (0.0ms)[0m  SELECT "products".* FROM "products"  WHERE "products"."active" = 't'
+  Rendered products/_product_row.html.erb (3.0ms)
+  Rendered products/_product_row.html.erb (2.0ms)
+  Rendered products/_product_row.html.erb (2.0ms)
+  Rendered products/index.html.erb within layouts/application (75.0ms)
+  Rendered layouts/_cart_text.html.erb (2.0ms)
+Completed 200 OK in 269ms (Views: 265.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2017-05-03 12:53:31 +0530
+
+
+Started GET "/assets/products.css?body=1" for 127.0.0.1 at 2017-05-03 12:53:31 +0530
+
+
+Started GET "/assets/order_items.css?body=1" for 127.0.0.1 at 2017-05-03 12:53:31 +0530
+
+
+Started GET "/assets/carts.css?body=1" for 127.0.0.1 at 2017-05-03 12:53:31 +0530
+
+
+Started GET "/carts" for 127.0.0.1 at 2017-05-03 13:03:32 +0530
+Processing by CartsController#show as HTML
+  Rendered carts/_shopping_cart.html.erb (1.0ms)
+  Rendered carts/show.html.erb within layouts/application (26.0ms)
+  Rendered layouts/_cart_text.html.erb (2.0ms)
+Completed 200 OK in 237ms (Views: 235.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/order_items.css?body=1" for 127.0.0.1 at 2017-05-03 13:03:32 +0530
+
+
+Started GET "/assets/carts.css?body=1" for 127.0.0.1 at 2017-05-03 13:03:32 +0530
+
+
+Started GET "/assets/products.css?body=1" for 127.0.0.1 at 2017-05-03 13:03:32 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2017-05-03 13:03:32 +0530
+
+
+Started GET "/" for 127.0.0.1 at 2017-05-03 13:03:36 +0530
+Processing by ProductsController#index as HTML
+  [1m[36mProduct Load (1.0ms)[0m  [1mSELECT "products".* FROM "products"  WHERE "products"."active" = 't'[0m
+  Rendered products/_product_row.html.erb (3.0ms)
+  Rendered products/_product_row.html.erb (2.0ms)
+  Rendered products/_product_row.html.erb (3.0ms)
+  Rendered products/index.html.erb within layouts/application (89.0ms)
+  Rendered layouts/_cart_text.html.erb (2.0ms)
+Completed 200 OK in 319ms (Views: 315.4ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/assets/products.css?body=1" for 127.0.0.1 at 2017-05-03 13:03:36 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2017-05-03 13:03:36 +0530
+
+
+Started GET "/assets/order_items.css?body=1" for 127.0.0.1 at 2017-05-03 13:03:36 +0530
+
+
+Started GET "/assets/carts.css?body=1" for 127.0.0.1 at 2017-05-03 13:03:37 +0530
+
+
+Started GET "/carts" for 127.0.0.1 at 2017-05-03 13:03:39 +0530
+Processing by CartsController#show as HTML
+  Rendered carts/_shopping_cart.html.erb (1.0ms)
+  Rendered carts/show.html.erb within layouts/application (26.0ms)
+  Rendered layouts/_cart_text.html.erb (2.0ms)
+Completed 200 OK in 244ms (Views: 243.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2017-05-03 13:03:39 +0530
+
+
+Started GET "/assets/products.css?body=1" for 127.0.0.1 at 2017-05-03 13:03:39 +0530
+
+
+Started GET "/assets/order_items.css?body=1" for 127.0.0.1 at 2017-05-03 13:03:39 +0530
+
+
+Started GET "/assets/carts.css?body=1" for 127.0.0.1 at 2017-05-03 13:03:39 +0530
+
+
+Started GET "/" for 127.0.0.1 at 2017-05-03 13:03:41 +0530
+Processing by ProductsController#index as HTML
+  [1m[35mProduct Load (1.0ms)[0m  SELECT "products".* FROM "products"  WHERE "products"."active" = 't'
+  Rendered products/_product_row.html.erb (2.0ms)
+  Rendered products/_product_row.html.erb (2.0ms)
+  Rendered products/_product_row.html.erb (2.0ms)
+  Rendered products/index.html.erb within layouts/application (90.0ms)
+  Rendered layouts/_cart_text.html.erb (2.0ms)
+Completed 200 OK in 307ms (Views: 303.3ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/assets/order_items.css?body=1" for 127.0.0.1 at 2017-05-03 13:03:41 +0530
+
+
+Started GET "/assets/products.css?body=1" for 127.0.0.1 at 2017-05-03 13:03:41 +0530
+
+
+Started GET "/assets/carts.css?body=1" for 127.0.0.1 at 2017-05-03 13:03:41 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2017-05-03 13:03:41 +0530
+
+
+Started POST "/order_items" for 127.0.0.1 at 2017-05-03 13:03:49 +0530
+Processing by OrderItemsController#create as HTML
+  Parameters: {"utf8"=>"✓", "order_item"=>{"quantity"=>"3", "product_id"=>"1"}, "commit"=>"Add to Cart"}
+Can't verify CSRF token authenticity
+Completed 422 Unprocessable Entity in 3ms
+
+ActionController::InvalidAuthenticityToken (ActionController::InvalidAuthenticityToken):
+  actionpack (4.1.6) lib/action_controller/metal/request_forgery_protection.rb:176:in `handle_unverified_request'
+  actionpack (4.1.6) lib/action_controller/metal/request_forgery_protection.rb:202:in `handle_unverified_request'
+  actionpack (4.1.6) lib/action_controller/metal/request_forgery_protection.rb:197:in `verify_authenticity_token'
+  activesupport (4.1.6) lib/active_support/callbacks.rb:424:in `block in make_lambda'
+  activesupport (4.1.6) lib/active_support/callbacks.rb:160:in `block in halting'
+  activesupport (4.1.6) lib/active_support/callbacks.rb:86:in `run_callbacks'
+  actionpack (4.1.6) lib/abstract_controller/callbacks.rb:19:in `process_action'
+  actionpack (4.1.6) lib/action_controller/metal/rescue.rb:29:in `process_action'
+  actionpack (4.1.6) lib/action_controller/metal/instrumentation.rb:31:in `block in process_action'
+  activesupport (4.1.6) lib/active_support/notifications.rb:159:in `block in instrument'
+  activesupport (4.1.6) lib/active_support/notifications/instrumenter.rb:20:in `instrument'
+  activesupport (4.1.6) lib/active_support/notifications.rb:159:in `instrument'
+  actionpack (4.1.6) lib/action_controller/metal/instrumentation.rb:30:in `process_action'
+  actionpack (4.1.6) lib/action_controller/metal/params_wrapper.rb:250:in `process_action'
+  activerecord (4.1.6) lib/active_record/railties/controller_runtime.rb:18:in `process_action'
+  actionpack (4.1.6) lib/abstract_controller/base.rb:136:in `process'
+  actionview (4.1.6) lib/action_view/rendering.rb:30:in `process'
+  actionpack (4.1.6) lib/action_controller/metal.rb:196:in `dispatch'
+  actionpack (4.1.6) lib/action_controller/metal/rack_delegation.rb:13:in `dispatch'
+  actionpack (4.1.6) lib/action_controller/metal.rb:232:in `block in action'
+  actionpack (4.1.6) lib/action_dispatch/routing/route_set.rb:82:in `dispatch'
+  actionpack (4.1.6) lib/action_dispatch/routing/route_set.rb:50:in `call'
+  actionpack (4.1.6) lib/action_dispatch/journey/router.rb:73:in `block in call'
+  actionpack (4.1.6) lib/action_dispatch/journey/router.rb:59:in `each'
+  actionpack (4.1.6) lib/action_dispatch/journey/router.rb:59:in `call'
+  actionpack (4.1.6) lib/action_dispatch/routing/route_set.rb:678:in `call'
+  rack (1.5.5) lib/rack/etag.rb:23:in `call'
+  rack (1.5.5) lib/rack/conditionalget.rb:35:in `call'
+  rack (1.5.5) lib/rack/head.rb:11:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/params_parser.rb:27:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/flash.rb:254:in `call'
+  rack (1.5.5) lib/rack/session/abstract/id.rb:225:in `context'
+  rack (1.5.5) lib/rack/session/abstract/id.rb:220:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/cookies.rb:560:in `call'
+  activerecord (4.1.6) lib/active_record/query_cache.rb:36:in `call'
+  activerecord (4.1.6) lib/active_record/connection_adapters/abstract/connection_pool.rb:621:in `call'
+  activerecord (4.1.6) lib/active_record/migration.rb:380:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/callbacks.rb:29:in `block in call'
+  activesupport (4.1.6) lib/active_support/callbacks.rb:82:in `run_callbacks'
+  actionpack (4.1.6) lib/action_dispatch/middleware/callbacks.rb:27:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/reloader.rb:73:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/remote_ip.rb:76:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/debug_exceptions.rb:17:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.1.6) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.1.6) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.1.6) lib/rails/rack/logger.rb:20:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.5.5) lib/rack/methodoverride.rb:21:in `call'
+  rack (1.5.5) lib/rack/runtime.rb:17:in `call'
+  activesupport (4.1.6) lib/active_support/cache/strategy/local_cache_middleware.rb:26:in `call'
+  rack (1.5.5) lib/rack/lock.rb:17:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/static.rb:64:in `call'
+  rack (1.5.5) lib/rack/sendfile.rb:112:in `call'
+  railties (4.1.6) lib/rails/engine.rb:514:in `call'
+  railties (4.1.6) lib/rails/application.rb:144:in `call'
+  rack (1.5.5) lib/rack/lock.rb:17:in `call'
+  rack (1.5.5) lib/rack/content_length.rb:14:in `call'
+  rack (1.5.5) lib/rack/handler/webrick.rb:60:in `service'
+  C:/RailsInstaller/Ruby2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:140:in `service'
+  C:/RailsInstaller/Ruby2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:96:in `run'
+  C:/RailsInstaller/Ruby2.3.0/lib/ruby/2.3.0/webrick/server.rb:296:in `block in start_thread'
+
+
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/_source.erb (1.0ms)
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.0ms)
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (2.0ms)
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (1149.1ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-05-03 13:03:59 +0530
+Processing by ProductsController#index as HTML
+  [1m[36mProduct Load (0.0ms)[0m  [1mSELECT "products".* FROM "products"  WHERE "products"."active" = 't'[0m
+  Rendered products/_product_row.html.erb (2.0ms)
+  Rendered products/_product_row.html.erb (3.0ms)
+  Rendered products/_product_row.html.erb (2.0ms)
+  Rendered products/index.html.erb within layouts/application (91.0ms)
+  Rendered layouts/_cart_text.html.erb (2.0ms)
+Completed 200 OK in 304ms (Views: 300.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/products.css?body=1" for 127.0.0.1 at 2017-05-03 13:04:00 +0530
+
+
+Started GET "/assets/carts.css?body=1" for 127.0.0.1 at 2017-05-03 13:04:00 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2017-05-03 13:04:00 +0530
+
+
+Started GET "/assets/order_items.css?body=1" for 127.0.0.1 at 2017-05-03 13:04:00 +0530
+
+
+Started GET "/carts" for 127.0.0.1 at 2017-05-03 13:04:01 +0530
+Processing by CartsController#show as HTML
+  Rendered carts/_shopping_cart.html.erb (1.0ms)
+  Rendered carts/show.html.erb within layouts/application (27.0ms)
+  Rendered layouts/_cart_text.html.erb (2.0ms)
+Completed 200 OK in 257ms (Views: 255.5ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/products.css?body=1" for 127.0.0.1 at 2017-05-03 13:04:02 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2017-05-03 13:04:02 +0530
+
+
+Started GET "/assets/order_items.css?body=1" for 127.0.0.1 at 2017-05-03 13:04:02 +0530
+
+
+Started GET "/assets/carts.css?body=1" for 127.0.0.1 at 2017-05-03 13:04:02 +0530
+
+
+Started GET "/" for 127.0.0.1 at 2017-05-03 13:04:05 +0530
+Processing by ProductsController#index as HTML
+  [1m[35mProduct Load (0.0ms)[0m  SELECT "products".* FROM "products"  WHERE "products"."active" = 't'
+  Rendered products/_product_row.html.erb (2.0ms)
+  Rendered products/_product_row.html.erb (2.0ms)
+  Rendered products/_product_row.html.erb (2.0ms)
+  Rendered products/index.html.erb within layouts/application (87.0ms)
+  Rendered layouts/_cart_text.html.erb (2.0ms)
+Completed 200 OK in 302ms (Views: 299.6ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/order_items.css?body=1" for 127.0.0.1 at 2017-05-03 13:04:05 +0530
+
+
+Started GET "/assets/products.css?body=1" for 127.0.0.1 at 2017-05-03 13:04:05 +0530
+
+
+Started GET "/assets/carts.css?body=1" for 127.0.0.1 at 2017-05-03 13:04:05 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2017-05-03 13:04:05 +0530
+
+
+Started GET "/" for 127.0.0.1 at 2017-05-03 14:35:27 +0530
+Processing by ProductsController#index as HTML
+  [1m[36mProduct Load (0.0ms)[0m  [1mSELECT "products".* FROM "products"  WHERE "products"."active" = 't'[0m
+  Rendered products/_product_row.html.erb (1.0ms)
+  Rendered products/_product_row.html.erb (1.0ms)
+  Rendered products/_product_row.html.erb (1.0ms)
+  Rendered products/index.html.erb within layouts/application (65.0ms)
+  Rendered layouts/_cart_text.html.erb (1.0ms)
+Completed 200 OK in 197ms (Views: 195.4ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/carts.css?body=1" for 127.0.0.1 at 2017-05-03 14:35:28 +0530
+
+
+Started GET "/assets/order_items.css?body=1" for 127.0.0.1 at 2017-05-03 14:35:28 +0530
+
+
+Started GET "/assets/products.css?body=1" for 127.0.0.1 at 2017-05-03 14:35:28 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2017-05-03 14:35:28 +0530
+
+
+Started GET "/carts" for 127.0.0.1 at 2017-05-03 14:36:44 +0530
+Processing by CartsController#show as HTML
+  Rendered carts/_shopping_cart.html.erb (1.0ms)
+  Rendered carts/show.html.erb within layouts/application (26.0ms)
+  Rendered layouts/_cart_text.html.erb (3.0ms)
+Completed 200 OK in 253ms (Views: 251.4ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/order_items.css?body=1" for 127.0.0.1 at 2017-05-03 14:36:44 +0530
+
+
+Started GET "/assets/products.css?body=1" for 127.0.0.1 at 2017-05-03 14:36:44 +0530
+
+
+Started GET "/assets/carts.css?body=1" for 127.0.0.1 at 2017-05-03 14:36:44 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2017-05-03 14:36:44 +0530
+
+
+Started GET "/" for 127.0.0.1 at 2017-05-03 14:36:48 +0530
+Processing by ProductsController#index as HTML
+  [1m[35mProduct Load (0.0ms)[0m  SELECT "products".* FROM "products"  WHERE "products"."active" = 't'
+  Rendered products/_product_row.html.erb (2.0ms)
+  Rendered products/_product_row.html.erb (2.0ms)
+  Rendered products/_product_row.html.erb (2.0ms)
+  Rendered products/index.html.erb within layouts/application (90.0ms)
+  Rendered layouts/_cart_text.html.erb (3.0ms)
+Completed 200 OK in 313ms (Views: 309.7ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/order_items.css?body=1" for 127.0.0.1 at 2017-05-03 14:36:49 +0530
+
+
+Started GET "/assets/products.css?body=1" for 127.0.0.1 at 2017-05-03 14:36:49 +0530
+
+
+Started GET "/assets/carts.css?body=1" for 127.0.0.1 at 2017-05-03 14:36:49 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2017-05-03 14:36:49 +0530
+
+
+Started GET "/" for 127.0.0.1 at 2017-05-03 14:36:51 +0530
+Processing by ProductsController#index as HTML
+  [1m[36mProduct Load (0.0ms)[0m  [1mSELECT "products".* FROM "products"  WHERE "products"."active" = 't'[0m
+  Rendered products/_product_row.html.erb (2.0ms)
+  Rendered products/_product_row.html.erb (2.0ms)
+  Rendered products/_product_row.html.erb (3.0ms)
+  Rendered products/index.html.erb within layouts/application (84.0ms)
+  Rendered layouts/_cart_text.html.erb (3.0ms)
+Completed 200 OK in 302ms (Views: 299.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/products.css?body=1" for 127.0.0.1 at 2017-05-03 14:36:51 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2017-05-03 14:36:51 +0530
+
+
+Started GET "/assets/order_items.css?body=1" for 127.0.0.1 at 2017-05-03 14:36:51 +0530
+
+
+Started GET "/assets/carts.css?body=1" for 127.0.0.1 at 2017-05-03 14:36:51 +0530
+
+
+Started POST "/order_items" for 127.0.0.1 at 2017-05-03 14:37:03 +0530
+Processing by OrderItemsController#create as HTML
+  Parameters: {"utf8"=>"✓", "order_item"=>{"quantity"=>"5", "product_id"=>"1"}, "commit"=>"Add to Cart"}
+Can't verify CSRF token authenticity
+Completed 422 Unprocessable Entity in 2ms
+
+ActionController::InvalidAuthenticityToken (ActionController::InvalidAuthenticityToken):
+  actionpack (4.1.6) lib/action_controller/metal/request_forgery_protection.rb:176:in `handle_unverified_request'
+  actionpack (4.1.6) lib/action_controller/metal/request_forgery_protection.rb:202:in `handle_unverified_request'
+  actionpack (4.1.6) lib/action_controller/metal/request_forgery_protection.rb:197:in `verify_authenticity_token'
+  activesupport (4.1.6) lib/active_support/callbacks.rb:424:in `block in make_lambda'
+  activesupport (4.1.6) lib/active_support/callbacks.rb:160:in `block in halting'
+  activesupport (4.1.6) lib/active_support/callbacks.rb:86:in `run_callbacks'
+  actionpack (4.1.6) lib/abstract_controller/callbacks.rb:19:in `process_action'
+  actionpack (4.1.6) lib/action_controller/metal/rescue.rb:29:in `process_action'
+  actionpack (4.1.6) lib/action_controller/metal/instrumentation.rb:31:in `block in process_action'
+  activesupport (4.1.6) lib/active_support/notifications.rb:159:in `block in instrument'
+  activesupport (4.1.6) lib/active_support/notifications/instrumenter.rb:20:in `instrument'
+  activesupport (4.1.6) lib/active_support/notifications.rb:159:in `instrument'
+  actionpack (4.1.6) lib/action_controller/metal/instrumentation.rb:30:in `process_action'
+  actionpack (4.1.6) lib/action_controller/metal/params_wrapper.rb:250:in `process_action'
+  activerecord (4.1.6) lib/active_record/railties/controller_runtime.rb:18:in `process_action'
+  actionpack (4.1.6) lib/abstract_controller/base.rb:136:in `process'
+  actionview (4.1.6) lib/action_view/rendering.rb:30:in `process'
+  actionpack (4.1.6) lib/action_controller/metal.rb:196:in `dispatch'
+  actionpack (4.1.6) lib/action_controller/metal/rack_delegation.rb:13:in `dispatch'
+  actionpack (4.1.6) lib/action_controller/metal.rb:232:in `block in action'
+  actionpack (4.1.6) lib/action_dispatch/routing/route_set.rb:82:in `dispatch'
+  actionpack (4.1.6) lib/action_dispatch/routing/route_set.rb:50:in `call'
+  actionpack (4.1.6) lib/action_dispatch/journey/router.rb:73:in `block in call'
+  actionpack (4.1.6) lib/action_dispatch/journey/router.rb:59:in `each'
+  actionpack (4.1.6) lib/action_dispatch/journey/router.rb:59:in `call'
+  actionpack (4.1.6) lib/action_dispatch/routing/route_set.rb:678:in `call'
+  rack (1.5.5) lib/rack/etag.rb:23:in `call'
+  rack (1.5.5) lib/rack/conditionalget.rb:35:in `call'
+  rack (1.5.5) lib/rack/head.rb:11:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/params_parser.rb:27:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/flash.rb:254:in `call'
+  rack (1.5.5) lib/rack/session/abstract/id.rb:225:in `context'
+  rack (1.5.5) lib/rack/session/abstract/id.rb:220:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/cookies.rb:560:in `call'
+  activerecord (4.1.6) lib/active_record/query_cache.rb:36:in `call'
+  activerecord (4.1.6) lib/active_record/connection_adapters/abstract/connection_pool.rb:621:in `call'
+  activerecord (4.1.6) lib/active_record/migration.rb:380:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/callbacks.rb:29:in `block in call'
+  activesupport (4.1.6) lib/active_support/callbacks.rb:82:in `run_callbacks'
+  actionpack (4.1.6) lib/action_dispatch/middleware/callbacks.rb:27:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/reloader.rb:73:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/remote_ip.rb:76:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/debug_exceptions.rb:17:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.1.6) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.1.6) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.1.6) lib/rails/rack/logger.rb:20:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.5.5) lib/rack/methodoverride.rb:21:in `call'
+  rack (1.5.5) lib/rack/runtime.rb:17:in `call'
+  activesupport (4.1.6) lib/active_support/cache/strategy/local_cache_middleware.rb:26:in `call'
+  rack (1.5.5) lib/rack/lock.rb:17:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/static.rb:64:in `call'
+  rack (1.5.5) lib/rack/sendfile.rb:112:in `call'
+  railties (4.1.6) lib/rails/engine.rb:514:in `call'
+  railties (4.1.6) lib/rails/application.rb:144:in `call'
+  rack (1.5.5) lib/rack/lock.rb:17:in `call'
+  rack (1.5.5) lib/rack/content_length.rb:14:in `call'
+  rack (1.5.5) lib/rack/handler/webrick.rb:60:in `service'
+  C:/RailsInstaller/Ruby2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:140:in `service'
+  C:/RailsInstaller/Ruby2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:96:in `run'
+  C:/RailsInstaller/Ruby2.3.0/lib/ruby/2.3.0/webrick/server.rb:296:in `block in start_thread'
+
+
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/_source.erb (2.0ms)
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.0ms)
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (2.0ms)
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (1229.1ms)
+
+
+Started POST "/order_items" for 127.0.0.1 at 2017-05-03 14:37:22 +0530
+Processing by OrderItemsController#create as HTML
+  Parameters: {"utf8"=>"✓", "order_item"=>{"quantity"=>"5", "product_id"=>"1"}, "commit"=>"Add to Cart"}
+Can't verify CSRF token authenticity
+Completed 422 Unprocessable Entity in 1ms
+
+ActionController::InvalidAuthenticityToken (ActionController::InvalidAuthenticityToken):
+  actionpack (4.1.6) lib/action_controller/metal/request_forgery_protection.rb:176:in `handle_unverified_request'
+  actionpack (4.1.6) lib/action_controller/metal/request_forgery_protection.rb:202:in `handle_unverified_request'
+  actionpack (4.1.6) lib/action_controller/metal/request_forgery_protection.rb:197:in `verify_authenticity_token'
+  activesupport (4.1.6) lib/active_support/callbacks.rb:424:in `block in make_lambda'
+  activesupport (4.1.6) lib/active_support/callbacks.rb:160:in `block in halting'
+  activesupport (4.1.6) lib/active_support/callbacks.rb:86:in `run_callbacks'
+  actionpack (4.1.6) lib/abstract_controller/callbacks.rb:19:in `process_action'
+  actionpack (4.1.6) lib/action_controller/metal/rescue.rb:29:in `process_action'
+  actionpack (4.1.6) lib/action_controller/metal/instrumentation.rb:31:in `block in process_action'
+  activesupport (4.1.6) lib/active_support/notifications.rb:159:in `block in instrument'
+  activesupport (4.1.6) lib/active_support/notifications/instrumenter.rb:20:in `instrument'
+  activesupport (4.1.6) lib/active_support/notifications.rb:159:in `instrument'
+  actionpack (4.1.6) lib/action_controller/metal/instrumentation.rb:30:in `process_action'
+  actionpack (4.1.6) lib/action_controller/metal/params_wrapper.rb:250:in `process_action'
+  activerecord (4.1.6) lib/active_record/railties/controller_runtime.rb:18:in `process_action'
+  actionpack (4.1.6) lib/abstract_controller/base.rb:136:in `process'
+  actionview (4.1.6) lib/action_view/rendering.rb:30:in `process'
+  actionpack (4.1.6) lib/action_controller/metal.rb:196:in `dispatch'
+  actionpack (4.1.6) lib/action_controller/metal/rack_delegation.rb:13:in `dispatch'
+  actionpack (4.1.6) lib/action_controller/metal.rb:232:in `block in action'
+  actionpack (4.1.6) lib/action_dispatch/routing/route_set.rb:82:in `dispatch'
+  actionpack (4.1.6) lib/action_dispatch/routing/route_set.rb:50:in `call'
+  actionpack (4.1.6) lib/action_dispatch/journey/router.rb:73:in `block in call'
+  actionpack (4.1.6) lib/action_dispatch/journey/router.rb:59:in `each'
+  actionpack (4.1.6) lib/action_dispatch/journey/router.rb:59:in `call'
+  actionpack (4.1.6) lib/action_dispatch/routing/route_set.rb:678:in `call'
+  rack (1.5.5) lib/rack/etag.rb:23:in `call'
+  rack (1.5.5) lib/rack/conditionalget.rb:35:in `call'
+  rack (1.5.5) lib/rack/head.rb:11:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/params_parser.rb:27:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/flash.rb:254:in `call'
+  rack (1.5.5) lib/rack/session/abstract/id.rb:225:in `context'
+  rack (1.5.5) lib/rack/session/abstract/id.rb:220:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/cookies.rb:560:in `call'
+  activerecord (4.1.6) lib/active_record/query_cache.rb:36:in `call'
+  activerecord (4.1.6) lib/active_record/connection_adapters/abstract/connection_pool.rb:621:in `call'
+  activerecord (4.1.6) lib/active_record/migration.rb:380:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/callbacks.rb:29:in `block in call'
+  activesupport (4.1.6) lib/active_support/callbacks.rb:82:in `run_callbacks'
+  actionpack (4.1.6) lib/action_dispatch/middleware/callbacks.rb:27:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/reloader.rb:73:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/remote_ip.rb:76:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/debug_exceptions.rb:17:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.1.6) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.1.6) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.1.6) lib/rails/rack/logger.rb:20:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.5.5) lib/rack/methodoverride.rb:21:in `call'
+  rack (1.5.5) lib/rack/runtime.rb:17:in `call'
+  activesupport (4.1.6) lib/active_support/cache/strategy/local_cache_middleware.rb:26:in `call'
+  rack (1.5.5) lib/rack/lock.rb:17:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/static.rb:64:in `call'
+  rack (1.5.5) lib/rack/sendfile.rb:112:in `call'
+  railties (4.1.6) lib/rails/engine.rb:514:in `call'
+  railties (4.1.6) lib/rails/application.rb:144:in `call'
+  rack (1.5.5) lib/rack/lock.rb:17:in `call'
+  rack (1.5.5) lib/rack/content_length.rb:14:in `call'
+  rack (1.5.5) lib/rack/handler/webrick.rb:60:in `service'
+  C:/RailsInstaller/Ruby2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:140:in `service'
+  C:/RailsInstaller/Ruby2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:96:in `run'
+  C:/RailsInstaller/Ruby2.3.0/lib/ruby/2.3.0/webrick/server.rb:296:in `block in start_thread'
+
+
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/_source.erb (1.0ms)
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (3.0ms)
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (2.0ms)
+  Rendered C:/RailsInstaller/Ruby2.3.0/lib/ruby/gems/2.3.0/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (1191.1ms)

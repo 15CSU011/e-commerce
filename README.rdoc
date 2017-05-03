@@ -1,0 +1,6 @@
+Used rake db:migrate
+     rake db:seed
+     bundle install
+     bundle update 
+     rails server 
+     
